@@ -12,8 +12,6 @@ file(GLOB_RECURSE source_executable      src/*.cpp)
 file(GLOB_RECURSE source_lib_headers src/lib/*.h)
 file(GLOB_RECURSE source_lib_impl src/lib/*.cpp)
 
-file(GLOB_RECURSE glad_impl dependencies/glad/src/*.c)
-
 file(GLOB_RECURSE glfw_impl dependencies/glfw/src/*.c)
 file(GLOB_RECURSE glfw_include dependencies/glfw/include/*.h)
 
@@ -27,7 +25,7 @@ file(GLOB_RECURSE glfw_include dependencies/glfw/include/*.h)
 # add the data to the target, so it becomes visible in some IDE
 add_executable(main ${source_executable})
 add_library(lib ${source_lib_impl})
-add_library(glad ${glad_impl})
+add_library(glad dependencies/glad/src/glad.c)
 add_library(glfw ${glfw_impl})
 
 target_link_libraries(main PUBLIC lib glad glfw)
