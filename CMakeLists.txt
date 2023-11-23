@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(Test_CMAKE)
+project(SpaceShooter)
 
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
@@ -28,7 +28,7 @@ target_include_directories(glad PUBLIC dependencies/glad/include)
 
 install(TARGETS main DESTINATION build)
 
-set(CPACK_PACKAGE_NAME "UntitledArcadeGame")
+set(CPACK_PACKAGE_NAME "SpaceShooter")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 
 # This must be last
