@@ -30,7 +30,7 @@ add_library(lib ${source_lib_impl})
 add_library(glad ${glad_impl})
 add_library(glfw ${glfw_impl})
 
-target_link_libraries(lib glad glfw)
+target_link_libraries(main PUBLIC lib glad glfw)
 
 # just for example add some compiler flags
 target_compile_options(main PUBLIC -std=c++1y -Wall -Wfloat-conversion)
