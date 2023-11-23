@@ -16,3 +16,4 @@ lib.dir/
 CMakeFiles/
 Debug/
 .vs/
+.vscode/
