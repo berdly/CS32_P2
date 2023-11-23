@@ -25,8 +25,6 @@ target_include_directories(main PUBLIC src/lib dependencies/glad/include depende
 target_include_directories(lib PUBLIC src/lib dependencies/glad/include dependencies/glfw/include)
 target_include_directories(glad PUBLIC dependencies/glad/include)
 
-file(COPY shaders/vertex.vert shaders/fragment.frag
-        DESTINATION ./build)
 install(TARGETS main DESTINATION ./build)
 
 set(CPACK_PACKAGE_NAME "SpaceShooter")
