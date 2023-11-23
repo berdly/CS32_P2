@@ -37,6 +37,8 @@ target_compile_options(main PUBLIC -std=c++1y -Wall -Wfloat-conversion)
 
 # this lets me include files relative to the root source directory with a <> pair
 target_include_directories(main PUBLIC src/lib dependencies/glad/include dependencies/glfw/include)
+target_include_directories(glad PUBLIC dependencies/glad/include)
+target_include_directories(glfw PUBLIC dependencies/glfw/include)
 
 # this copies all resource files in the build directory
 # we need this, because we want to work with paths relative to the executable
