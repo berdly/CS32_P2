@@ -26,7 +26,7 @@ file(GLOB_RECURSE glfw_include dependencies/glfw/include/*.h)
 
 # add the data to the target, so it becomes visible in some IDE
 add_executable(main ${source_executable})
-add_library(lib &{source_lib_impl})
+add_library(lib ${source_lib_impl})
 add_library(glad ${glad_impl})
 add_library(glfw ${glfw_impl})
 
