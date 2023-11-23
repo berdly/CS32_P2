@@ -83,11 +83,11 @@ int main(int argc, char * argv[]) {
     glEnableVertexAttribArray(1);
 
 #ifdef _WIN32
-    ShaderProg shaderProg1{ "..\\shaders\\vertex.vert", ".\\shaders\\fragment.frag" };
-    ShaderProg shaderProg2{ "..\\shaders\\vertex.vert", ".\\shaders\\fragment.frag" };
+    ShaderProg shaderProg1{ "..\\shaders\\vertex.vert", "..\\shaders\\fragment.frag" };
+    ShaderProg shaderProg2{ "..\\shaders\\vertex.vert", "..\\shaders\\fragment.frag" };
 #else
-    ShaderProg shaderProg1{ "./shaders/vertex.vert", "./shaders/fragment.frag" };
-    ShaderProg shaderProg2{ "./shaders/vertex.vert", "./shaders/fragment.frag" };
+    ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
+    ShaderProg shaderProg2{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
 #endif
 
     unsigned offset{ shaderProg1.get_uniform_addr("offset") };
