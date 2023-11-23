@@ -1,5 +1,5 @@
 // Local Headers
-#include "shader.h"
+#include "shaderprog.h"
 
 // System Headers
 #include <glad/glad.h>
