@@ -32,7 +32,7 @@ add_executable(main ${source_executable})
 add_library(lib ${source_lib_impl})
 add_library(glad dependencies/glad/src/glad.c)
 
-target_link_libraries(main PUBLIC lib glad glfw ${glfw_LIBRARIES)
+target_link_libraries(main PUBLIC lib glad glfw ${glfw_LIBRARIES})
 
 # just for example add some compiler flags
 target_compile_features(main PUBLIC cxx_std_17)
