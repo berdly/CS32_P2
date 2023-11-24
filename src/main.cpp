@@ -4,10 +4,12 @@
 // System Headers
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm.hpp>
+#include <glm/matrix_transform.hpp>
+#include <glm/type_ptr.hpp>
 
 // Standard Headers
 #include <iostream>
-#include <cstdlib>
 
 class Entity {
     double x_pos;
@@ -77,8 +79,7 @@ int main(int argc, char * argv[]) {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
 
-
-    ShaderProg shaderProg1{ fs::path{"../shaders/vertex.vert"}, fs::path{"../shaders/fragment.frag"} };
+    ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
 
     while (!glfwWindowShouldClose(window)) {
         
