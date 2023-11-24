@@ -1,9 +1,12 @@
-// Local Headers
+//class to handle dynamic shader loading
 #include "shaderprog.h"
 
-// System Headers
+//OpenGL function loading
 #include <glad/glad.h>
+//window and input handling
 #include <GLFW/glfw3.h>
+
+//matrix math for vertex shader
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
