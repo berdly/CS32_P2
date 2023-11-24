@@ -13,12 +13,6 @@
 // Standard Headers
 #include <iostream>
 
-class Entity {
-    double x_pos;
-    double y_pos;
-    Entity() = default;
-    virtual void update() = 0;
-};
 
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);

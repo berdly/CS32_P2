@@ -28,5 +28,7 @@ public:
 
 	void setMatrix(const std::string&, float*);
 	void setMatrix(unsigned, float*);
+	template<typename T>
+	void setArr
 };
 #endif
