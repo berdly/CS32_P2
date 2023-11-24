@@ -5,11 +5,14 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
+
+namespace std::filesystem = fs;
 #include <glad/glad.h>
 class ShaderProg {
 	unsigned id;
 public:
-	ShaderProg(const char* vSource, const char* fSource);
+	ShaderProg(const fs::path& vSource, const fs::path& fSource);
 	void use();
 	unsigned get_uniform_addr(const std::string&);
 

@@ -8,6 +8,9 @@
 // Standard Headers
 #include <iostream>
 #include <cstdlib>
+#include <filesystem>
+namespace fs = std::filesystem;
+
 class Entity {
     double x_pos;
     double y_pos;
@@ -48,71 +51,44 @@ void processInput(GLFWwindow* window) {
 }
 
 int main(int argc, char * argv[]) {
-    float ver1[]{
-        -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-        0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+    float ver[]{
+        -0.5f, -0.5f, 0.0f, 
+        0.0f, 0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f
     };
-    float ver2[]{
-        0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        0.4f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-    };
+    float textCord[]{
+        0.0f, 0.0f,
+        0.5f, 1.0f,
+        1.0f, 0.0f
+    }
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
     auto window{ init_window() };
-    unsigned VAO[2];
-    unsigned VBO[2];
-    glGenBuffers(2, VBO);
-    glGenVertexArrays(2, VAO);
+    unsigned VAO;
+    unsigned VBO;
+    glGenBuffers(1, &VBO);
+    glGenVertexArrays(1, &VAO);
 
-    glBindVertexArray(VAO[0]);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ver1), ver1, GL_STATIC_DRAW);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(ver), ver, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void*>(0));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void*>(3*sizeof(float)));
-    glEnableVertexAttribArray(1);
 
-    glBindVertexArray(VAO[1]);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ver2), ver2, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void*>(3*sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-#ifdef _WIN32
-    ShaderProg shaderProg1{ "..\\shaders\\vertex.vert", "..\\shaders\\fragment.frag" };
-    ShaderProg shaderProg2{ "..\\shaders\\vertex.vert", "..\\shaders\\fragment.frag" };
-#else
     ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
-    ShaderProg shaderProg2{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
-#endif
 
-    unsigned offset{ shaderProg1.get_uniform_addr("offset") };
-    float val{};
-    float last{ static_cast<float>(glfwGetTime()) };
-    float deltaTime{};
     while (!glfwWindowShouldClose(window)) {
-        float now{ static_cast<float>(glfwGetTime()) };
-        deltaTime = now - last;
-        last = now;
-        if (val > 0.5) {
-            val -= deltaTime/5.0;
-        }
-        else {
-            val += deltaTime/5.0;
-        }
+        
         processInput(window);
         glClear(GL_COLOR_BUFFER_BIT);
-        shaderProg1.use();
-        shaderProg1.setFloat(offset, val);
-        glBindVertexArray(VAO[0]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        shaderProg2.use();
-        glBindVertexArray(VAO[1]);
+        shaderProg1.use();
+        glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwSwapBuffers(window);
