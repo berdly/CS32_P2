@@ -15,6 +15,8 @@ This class handles the dynamic compilation of shaders from text files
 (in this case the vertex and fragment shader) and links them together 
 into a usable program. Also provides helper functions for setting 
 uniform variables (parameters used for rendering calculations).
+This game is simple so we'll share one shader program between all
+entities as there's no need for added complexity.
 */
 class ShaderProg {
 	unsigned id;
