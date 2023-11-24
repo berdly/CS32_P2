@@ -58,6 +58,8 @@ int main(int argc, char * argv[]) {
         0.0f, 0.5f, 0.0f,
         0.5f, -0.5f, 0.0f
     };
+    glm::mat4 m = glm::mat4(1.0f);
+    std::cout << glm::value_ptr(m);
     /*
     float textCord[]{
         0.0f, 0.0f,
