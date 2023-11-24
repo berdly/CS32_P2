@@ -57,9 +57,6 @@ int main(int argc, char * argv[]) {
         0.0f, 0.5f, 0.0f,
         0.5f, -0.5f, 0.0f
     };
-    glm::mat4 m = glm::mat4(1.0f);
-    std::cout << glm::value_ptr(m);
-    m = glm::rotate(m, glm::half_pi<float>(), glm::vec3{0.0f, 0.0f, 1.0f});
     /*
     float textCord[]{
         0.0f, 0.0f,
@@ -86,13 +83,16 @@ int main(int argc, char * argv[]) {
 
     ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
     shaderProg1.use();
-    shaderProg1.setMatrix("transform", glm::value_ptr(m));
+    glm::mat4 m = glm::mat4(1.0f);
+    std::cout << glm::value_ptr(m);
+    unsigned unif_addr{shaderProg1.get_uniform_addr("transform")};
 
     while (!glfwWindowShouldClose(window)) {
-        
+        m = glm::rotate(m, 0.05f, glm::vec3{0.0f, 0.0f, 1.0f});
         processInput(window);
         glClear(GL_COLOR_BUFFER_BIT);
-
+        
+        shaderProg1.setMatrix(unif_addr, glm::value_ptr(m));
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
