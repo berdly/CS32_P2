@@ -7,7 +7,6 @@ vcxproj
 *.filters
 *.tlog
 *.exe
-generate.stamp
 *.txt
 !CMakeList.txt
 glad.dir/
