@@ -1,3 +1,5 @@
+#ifndef RENDERER_H
+
 #include "shaderprog.h"
 #include "entity.h"
 
@@ -16,3 +18,4 @@ public:
     Renderer(float* vertices, size_t size, ShaderProg& shader);
     void draw(const Entity& sprite);
 };
+#endif

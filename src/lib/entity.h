@@ -1,4 +1,4 @@
-#include <glm/glm.hpp>
+
 /*
 Abstract base class to represent any object which needs to move and be drawn.
 The update function will be called every frame with dt being the time since the last frame
@@ -7,6 +7,8 @@ position based on the current velocity. Position represents the upper left corne
 containing the object and size represents the bottom left which is needed for collision and rotation.
 Angle determines the orientation with respect to the x-axis in radians.
 */
+#ifndef ENTITY_H
+#include <glm/glm.hpp>
 class Entity {
 protected:
     glm::vec2 position;
@@ -28,6 +30,7 @@ public:
 //just for testing
 class StaticEntity : public Entity {
 public:
-    StaticEntity(const glm::vec2 pos, const glm::vec2 size) : Entity{pos, size} {}
+    StaticEntity(const glm::vec2 pos, const glm::vec2 size) : Entity{ pos, size } {}
     void update(float dt) override {} //never moves
-}
+};
+#endif
