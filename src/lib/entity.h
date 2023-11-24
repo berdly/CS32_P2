@@ -25,7 +25,7 @@ public:
     const glm::vec2& get_pos() const { return position; }
     const glm::vec2& get_dim() const { return size; }
 };
-
+//just for testing
 class StaticEntity : public Entity {
 public:
     StaticEntity(const glm::vec2 pos, const glm::vec2 size) : Entity{pos, size} {}

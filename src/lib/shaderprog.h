@@ -28,7 +28,11 @@ public:
 
 	void setMatrix(const std::string&, float*);
 	void setMatrix(unsigned, float*);
+	/*
 	template<typename T>
-	void setArr
+	void setArr(const std::string&, T*);
+	template<typename T>
+	void setArr(unsigned, T*);
+	*/
 };
 #endif
