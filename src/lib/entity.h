@@ -8,6 +8,7 @@ containing the object and size represents the bottom left which is needed for co
 Angle determines the orientation with respect to the x-axis in radians.
 */
 #ifndef ENTITY_H
+#define ENTITY_H
 #include <glm/glm.hpp>
 class Entity {
 protected:
