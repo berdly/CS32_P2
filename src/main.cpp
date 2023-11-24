@@ -1,6 +1,12 @@
 //class to handle dynamic shader loading
 #include "shaderprog.h"
 
+//class which represents game objects
+#include "entity.h"
+
+//class which handles rendering of entities
+#include "renderer.h"
+
 //OpenGL function loading
 #include <glad/glad.h>
 //window and input handling
@@ -51,49 +57,18 @@ int main(int argc, char * argv[]) {
         0.0f, 0.5f, 0.0f,
         0.5f, -0.5f, 0.0f
     };
-    /*
-    float textCord[]{
-        0.0f, 0.0f,
-        0.5f, 1.0f,
-        1.0f, 0.0f
-    };
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    */
     auto window{ init_window() };
-    unsigned VAO;
-    unsigned VBO;
-    glGenBuffers(1, &VBO);
-    glGenVertexArrays(1, &VAO);
+    ShaderProg shaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
+    shaderProg.use();
+    Renderer renderer{ver, sizeof(ver), shaderProg};
 
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ver), ver, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-
-    ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
-    shaderProg1.use();
-    glm::mat4 m{ 1.0f };
-    glm::mat4 s{ 1.0f };
-    unsigned unif_addr{shaderProg1.get_uniform_addr("transform")};
+    StaticEntity triangle{glm::vec2{0.0f, 0.0f}, glm::vec2{1.0f, 0.5f}};
 
     while (!glfwWindowShouldClose(window)) {
-        m = glm::rotate(m, 0.0002f, glm::vec3{0.0f, 0.0f, 1.0f});
         processInput(window);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        shaderProg1.setMatrix(unif_addr, glm::value_ptr(m));
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
-        s = glm::scale(s, glm::vec3(1.0005f, 1.0005f, 1.0005f));
-        shaderProg1.setMatrix(unif_addr, glm::value_ptr(s));
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        renderer.draw(triangle);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
