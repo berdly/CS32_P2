@@ -34,4 +34,12 @@ public:
     StaticEntity(const glm::vec2 pos, const glm::vec2 size) : Entity{ pos, size } {}
     void update(float dt) override {} //never moves
 };
+//testing update
+class Spinner : public Entity {
+public:
+    Spinner(const glm::vec2 pos, const glm::vec2 size) : Entity{ pos, size } {}
+    void update(float dt) override {
+        this->angle += dt;
+    }
+};
 #endif
