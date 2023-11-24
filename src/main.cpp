@@ -83,16 +83,21 @@ int main(int argc, char * argv[]) {
 
     ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
     shaderProg1.use();
-    glm::mat4 m = glm::mat4(1.0f);
-    std::cout << glm::value_ptr(m);
+    glm::mat4 m{ 1.0f };
+    glm::mat4 s{ 1.0f };
     unsigned unif_addr{shaderProg1.get_uniform_addr("transform")};
 
     while (!glfwWindowShouldClose(window)) {
-        m = glm::rotate(m, 0.05f, glm::vec3{0.0f, 0.0f, 1.0f});
+        m = glm::rotate(m, 0.0002f, glm::vec3{0.0f, 0.0f, 1.0f});
         processInput(window);
         glClear(GL_COLOR_BUFFER_BIT);
         
         shaderProg1.setMatrix(unif_addr, glm::value_ptr(m));
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        s = glm::scale(s, glm::vec3(1.0005f, 1.0005f, 1.0005f));
+        shaderProg1.setMatrix(unif_addr, glm::value_ptr(s));
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
