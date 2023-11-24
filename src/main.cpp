@@ -10,7 +10,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 // Standard Headers
 #include <iostream>
 
@@ -60,6 +59,7 @@ int main(int argc, char * argv[]) {
     };
     glm::mat4 m = glm::mat4(1.0f);
     std::cout << glm::value_ptr(m);
+    m = glm::rotate(m, glm::half_pi<float>(), glm::vec3{0.0f, 0.0f, 1.0f});
     /*
     float textCord[]{
         0.0f, 0.0f,
@@ -85,13 +85,14 @@ int main(int argc, char * argv[]) {
     glEnableVertexAttribArray(0);
 
     ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
+    shaderProg1.use();
+    shaderProg1.setMatrix("transform", glm::value_ptr(m));
 
     while (!glfwWindowShouldClose(window)) {
         
         processInput(window);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        shaderProg1.use();
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 

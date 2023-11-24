@@ -8,8 +8,8 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
-
 #include <glad/glad.h>
+
 class ShaderProg {
 	unsigned id;
 public:
@@ -25,5 +25,8 @@ public:
 
 	void setFloat(const std::string&, float);
 	void setFloat(unsigned, float);
+
+	void setMatrix(const std::string&, float*);
+	void setMatrix(unsigned, float*);
 };
 #endif

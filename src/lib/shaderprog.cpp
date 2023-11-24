@@ -1,5 +1,4 @@
 #include "shaderprog.h"
-
 ShaderProg::ShaderProg(const fs::path& vSource, const fs::path& fSource) {
 	std::string vStr, fStr;
 	std::ifstream vFile, fFile;
@@ -83,4 +82,11 @@ void ShaderProg::setFloat(const std::string& unif, float data) {
 }
 void ShaderProg::setFloat(unsigned addr, float data) {
 	glUniform1f(addr, data);
+}
+
+void ShaderProg::setMatrix(const std::string& unif, float* data) {
+	glUniformMatrix4fv(this->get_uniform_addr(unif), 1, GL_FALSE, data);
+}
+void ShaderProg::setMatrix(unsigned addr, float* data) {
+	glUniformMatrix4fv(addr, 1, GL_FALSE, data);
 }
