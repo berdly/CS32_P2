@@ -62,8 +62,9 @@ int main(int argc, char * argv[]) {
     shaderProg.use();
     Renderer renderer{ver, sizeof(ver), shaderProg};
 
-    Spinner triangle{glm::vec2{1.0f, 1.0f}, glm::vec2{1.0f, 0.5f}};
+    Spinner triangle{glm::vec2{0.0, 0.0f}, glm::vec2{1.0f, 0.5f}};
     float last = glfwGetTime();
+
     while (!glfwWindowShouldClose(window)) {
         float now = glfwGetTime();
         float dt{now - last};

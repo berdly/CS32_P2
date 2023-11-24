@@ -39,7 +39,12 @@ class Spinner : public Entity {
 public:
     Spinner(const glm::vec2 pos, const glm::vec2 size) : Entity{ pos, size } {}
     void update(float dt) override {
+        static float direction{1.0f};
         this->angle += dt;
+        if((this->x_pos() > 0.75) || (this->x_pos() < -0.75)){
+            direction *= -1.0;
+        }
+        this->position.x += direction * dt;
     }
 };
 #endif
