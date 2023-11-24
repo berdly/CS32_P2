@@ -17,9 +17,9 @@ Renderer::Renderer(float* vertices, size_t size, ShaderProg& prog) : VAO{}, tran
 }
 void Renderer::draw(const Entity& sprite) {
     //creates transformation matrix then sends it as a uniform to the vertex shader, then draws
-    glm::mat4 transform{ glm::translate(glm::mat4{1.0f}, glm::vec3{sprite.get_pos(), 0.0f}) };
-    glm::vec3 rot_axis{ glm::normalize(glm::vec3(sprite.get_pos() + (sprite.get_dim() / 2.0f), 1.0f)) };
-    transform = glm::rotate(glm::mat4{ 1.0f }, sprite.rotation(), rot_axis);
+    glm::mat4 transform{ glm::translate(glm::mat4{1.0f}, glm::vec3{sprite.x_pos(), -sprite.y_pos(), 0.0f}) };
+    //glm::vec3 rot_axis{ glm::normalize(glm::vec3(sprite.x_pos() + (sprite.length() / 2.0f), (sprite.y_pos() - (sprite.height()/2.0f)), 1.0f)) };
+    transform = glm::rotate(transform, sprite.rotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 
     shader.setMatrix(transform_addr, glm::value_ptr(transform));
     glBindVertexArray(VAO);
