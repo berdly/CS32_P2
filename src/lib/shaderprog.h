@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 class ShaderProg {
 	unsigned id;
 public:
-	ShaderProg(const Path& vSource, const Path& fSource);
+	ShaderProg(const fs::path& vSource, const fs::path& fSource);
 	void use();
 	unsigned get_uniform_addr(const std::string&);
 

@@ -8,8 +8,6 @@
 // Standard Headers
 #include <iostream>
 #include <cstdlib>
-#include <filesystem>
-namespace fs = std::filesystem;
 
 class Entity {
     double x_pos;
