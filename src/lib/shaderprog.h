@@ -7,12 +7,13 @@
 #include <iostream>
 #include <filesystem>
 
-namespace std::filesystem = fs;
+typedef std::filesystem::path Path;
+
 #include <glad/glad.h>
 class ShaderProg {
 	unsigned id;
 public:
-	ShaderProg(const fs::path& vSource, const fs::path& fSource);
+	ShaderProg(const Path& vSource, const Path& fSource);
 	void use();
 	unsigned get_uniform_addr(const std::string&);
 

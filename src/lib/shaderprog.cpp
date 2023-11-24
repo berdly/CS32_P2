@@ -1,5 +1,6 @@
 #include "shaderprog.h"
-ShaderProg::ShaderProg(const fs::path& vSource, const fs::path& fSource) {
+
+ShaderProg::ShaderProg(const Path& vSource, const Path& fSource) {
 	std::string vStr, fStr;
 	std::ifstream vFile, fFile;
 	vFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
