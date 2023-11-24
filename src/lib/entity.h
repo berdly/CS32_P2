@@ -15,7 +15,7 @@ protected:
     float angle;
 public:
     Entity(const glm::vec2 pos, const glm::vec2 vel, glm::vec2 dim, float rot) : position{pos}, velocity{vel}, size{dim}, angle{rot} {}
-    Entity(const glm::vec2 pos, const glm::vec2 dim) : Entity { pos, glm::vec2{ 0.0f, 0.0f }, dim, 0.0f }
+    Entity(const glm::vec2 pos, const glm::vec2 dim) : Entity { pos, glm::vec2{ 0.0f, 0.0f }, dim, 0.0f } {}
     virtual void update(float dt) = 0;
     float rotation() const { return angle; }
     float x_pos() const { return position.x; }
