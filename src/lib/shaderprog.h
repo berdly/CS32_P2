@@ -7,7 +7,7 @@
 #include <iostream>
 #include <filesystem>
 
-typedef std::filesystem::path Path;
+namespace fs = std::filesystem;
 
 #include <glad/glad.h>
 class ShaderProg {

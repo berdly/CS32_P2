@@ -30,7 +30,6 @@ GLFWwindow* init_window() {
     GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", nullptr, nullptr) };
     if (!mwindow) {
         std::cout << "Couldn't open window.";
-        std::exit(1);
     }
     glfwMakeContextCurrent(mwindow);
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
@@ -56,16 +55,17 @@ int main(int argc, char * argv[]) {
         0.0f, 0.5f, 0.0f,
         0.5f, -0.5f, 0.0f
     };
+    /*
     float textCord[]{
         0.0f, 0.0f,
         0.5f, 1.0f,
         1.0f, 0.0f
-    }
+    };
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
+    */
     auto window{ init_window() };
     unsigned VAO;
     unsigned VBO;
@@ -80,7 +80,7 @@ int main(int argc, char * argv[]) {
     glEnableVertexAttribArray(0);
 
 
-    ShaderProg shaderProg1{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
+    ShaderProg shaderProg1{ fs::path{"../shaders/vertex.vert"}, fs::path{"../shaders/fragment.frag"} };
 
     while (!glfwWindowShouldClose(window)) {
         

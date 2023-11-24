@@ -1,13 +1,13 @@
 #include "shaderprog.h"
 
-ShaderProg::ShaderProg(const Path& vSource, const Path& fSource) {
+ShaderProg::ShaderProg(const fs::path& vSource, const fs::path& fSource) {
 	std::string vStr, fStr;
 	std::ifstream vFile, fFile;
 	vFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	fFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try {
-		vFile.open(vSource.c_str());
-		fFile.open(fSource.c_str());
+		vFile.open(vSource);
+		fFile.open(fSource);
 		std::stringstream vBuf, fBuf;
 		vBuf << vFile.rdbuf();
 		fBuf << fFile.rdbuf();
