@@ -1,5 +1,5 @@
 #ifndef RENDERER_H
-
+#define RENDERER_H
 #include "shaderprog.h"
 #include "entity.h"
 
