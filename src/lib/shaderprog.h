@@ -13,7 +13,8 @@ namespace fs = std::filesystem;
 A shader program is a set of rendering instructions used by OpenGL. 
 This class handles the dynamic compilation of shaders from text files 
 (in this case the vertex and fragment shader) and links them together 
-into a usable program
+into a usable program. Also provides helper functions for setting 
+uniform variables (parameters used for rendering calculations).
 */
 class ShaderProg {
 	unsigned id;
