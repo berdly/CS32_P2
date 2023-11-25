@@ -11,8 +11,11 @@
 #include <GLFW/glfw3.h>
 // Standard Headers
 #include <iostream>
+#include <vector>
+#include <utility>
 
 
+ init_player()
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
@@ -55,7 +58,7 @@ int main(int argc, char * argv[]) {
     shaderProg.use();
     Renderer renderer{ver, sizeof(ver), shaderProg};
 
-    Player triangle{glm::vec2{0.0, 0.0f}, glm::vec2{1.0f, 0.5f}};
+    PlayerPos triangle{glm::vec2{0.0, 0.0f}, glm::vec2{1.0f, 0.5f}};
     float last = glfwGetTime();
 
     while (!glfwWindowShouldClose(window)) {
