@@ -10,6 +10,7 @@ Angle determines the orientation with respect to the x-axis in radians.
 #ifndef ENTITY_H
 #define ENTITY_H
 #include <glm/glm.hpp>
+#include <glfw/glfw3.h>
 class Entity {
 protected:
     glm::vec2 position;
@@ -45,6 +46,32 @@ public:
             direction *= -1.0;
         }
         this->position.x += direction * dt;
+    }
+};
+
+class Player : public Entity {
+    bool wasd[4];
+public:
+    Player(const glm::vec2 pos, const glm::vec2 size) : Entity{ pos, size },  wasd{ false, false, false, false } {}
+    void process_input(GLFWwindow* window){
+        wasd[0] = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
+        wasd[1] = glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
+        wasd[2] = glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
+        wasd[3] = glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS;
+    }
+    void update(float dt) override {
+        if(wasd[0]){
+            position.y += dt;
+        }
+        if(wasd[1]){
+            position.x -= dt;
+        }
+        if(wasd[2]){
+            position.y -= dt;
+        }
+        if(wasd[3]){
+            position.x += dt;
+        }
     }
 };
 #endif

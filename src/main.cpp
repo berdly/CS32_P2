@@ -62,7 +62,7 @@ int main(int argc, char * argv[]) {
     shaderProg.use();
     Renderer renderer{ver, sizeof(ver), shaderProg};
 
-    Spinner triangle{glm::vec2{0.0, 0.0f}, glm::vec2{1.0f, 0.5f}};
+    Player triangle{glm::vec2{0.0, 0.0f}, glm::vec2{1.0f, 0.5f}};
     float last = glfwGetTime();
 
     while (!glfwWindowShouldClose(window)) {
@@ -71,7 +71,7 @@ int main(int argc, char * argv[]) {
         last = now;
 
         processInput(window);
-
+        triangle.process_input(window);
         glClear(GL_COLOR_BUFFER_BIT);
         triangle.update(dt);
         renderer.draw(triangle);
