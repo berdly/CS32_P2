@@ -14,12 +14,12 @@ Angle determines the orientation with respect to the x-axis in radians.
 class Entity {
 protected:
     glm::vec2 position;
-    glm::vec2 velocity;
     glm::vec2 size;
+    float speed;
     float angle;
 public:
-    Entity(const glm::vec2 pos, const glm::vec2 vel, glm::vec2 dim, float rot) : position{pos}, velocity{vel}, size{dim}, angle{rot} {}
-    Entity(const glm::vec2 pos, const glm::vec2 dim) : Entity { pos, glm::vec2{ 0.0f, 0.0f }, dim, 0.0f } {}
+    Entity(const glm::vec2& pos, const glm::vec2& dim, float mag, float rot) : position{pos}, speed{mag}, size{dim}, angle{rot} {}
+    Entity(const glm::vec2& pos, const glm::vec2& dim) : Entity { pos, dim, 0.0f, 0.0f } {}
     virtual void update(float dt) = 0;
     float rotation() const { return angle; }
     float x_pos() const { return position.x; }
@@ -61,17 +61,37 @@ public:
     }
     void update(float dt) override {
         if(wasd[0]){
-            position.y += dt;
+            speed += dt/1000.0f;
         }
         if(wasd[1]){
-            position.x -= dt;
+            angle -= dt*3;
         }
         if(wasd[2]){
-            position.y -= dt;
+            speed -= dt/1000.0f;;
         }
         if(wasd[3]){
-            position.x += dt;
+             angle += dt*3;
         }
+        if (speed < 0.0f) {
+            speed = 0.0f;
+        }
+        else if (speed > 1.0f) {
+            speed = 1.0f;
+        }
+        position -= speed * glm::vec2{glm::sin(angle), -glm::cos(angle)};
+        if (position.x > 1.0f) {
+            position.x = 1.0f;
+        }
+        else if (position.x < -1.0f) {
+            position.x = -1.0f;
+        }
+        if (position.y > 1.0f) {
+            position.y = 1.0f;
+        }
+        else if (position.y < -1.0f) {
+            position.y = -1.0f;
+        }
+        speed -= dt / 2000.0f;
     }
 };
 #endif

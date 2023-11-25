@@ -1,9 +1,7 @@
 //class to handle dynamic shader loading
 #include "shaderprog.h"
-
 //class which represents game objects
 #include "entity.h"
-
 //class which handles rendering of entities
 #include "renderer.h"
 
@@ -11,11 +9,6 @@
 #include <glad/glad.h>
 //window and input handling
 #include <GLFW/glfw3.h>
-
-//matrix math for vertex shader
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 // Standard Headers
 #include <iostream>
 
