@@ -18,7 +18,7 @@ add_library(lib ${source_lib_impl})
 add_library(glad dependencies/glad/src/glad.c)
 
 target_link_libraries(main PUBLIC lib glad glfw ${glfw_LIBRARIES})
-target_link_libraries(lib PUBLIC glfw ${glfw_LIBRARIES})
+target_link_libraries(lib PUBLIC glad glfw ${glfw_LIBRARIES})
 
 target_compile_features(main PUBLIC cxx_std_17)
 target_compile_features(lib PUBLIC cxx_std_17)
