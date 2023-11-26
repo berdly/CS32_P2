@@ -22,6 +22,7 @@ protected:
 public:
     Entity(const glm::vec2& pos, const glm::vec2& dim, float mag, float rot) : position{pos}, speed{mag}, size{dim}, angle{rot} {}
     Entity(const glm::vec2& pos, const glm::vec2& dim) : Entity { pos, dim, 0.0f, 0.0f } {}
+    //true indicates some change in state we'd like to check, such as if the player shoots a bullet
     virtual bool update(float dt) = 0;
     float rotation() const { return angle; }
     float x_pos() const { return position.x; }
