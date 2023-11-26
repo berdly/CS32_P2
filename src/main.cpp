@@ -4,7 +4,7 @@
 #include "entity.h"
 //class which handles rendering of entities
 #include "renderer.h"
-
+#include "handler.h"
 //OpenGL function loading
 #include <glad/glad.h>
 //window and input handling
@@ -46,29 +46,22 @@ void processInput(GLFWwindow* window) {
 }
 
 int main(int argc, char * argv[]) {
-    float ver[]{
-        -0.5f, -0.5f, 0.0f, 
-        0.0f, 0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f
-    };
     auto window{ init_window() };
     ShaderProg shaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
     shaderProg.use();
-    Renderer renderer{ver, sizeof(ver), shaderProg};
-
-    PlayerPos player{ glm::vec2{0.0f, 0.0f} };
+    
+    PlayerHandler player{shaderProg};
+    
     float last = glfwGetTime();
-
     while (!glfwWindowShouldClose(window)) {
         float now = glfwGetTime();
         float dt{now - last};
         last = now;
 
         processInput(window);
-        player.process_input(window);
-        player.update(dt);
+        player.update(window, dt);
         glClear(GL_COLOR_BUFFER_BIT);
-        renderer.draw(player);
+        player.draw();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

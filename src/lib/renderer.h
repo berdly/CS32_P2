@@ -16,6 +16,7 @@ class Renderer {
     ShaderProg& shader;
 public:
     Renderer(float* vertices, size_t size, ShaderProg& shader);
-    void draw(const Entity& sprite);
+    void draw(const Entity& sprite) const;
+    void draw(const Entity* sprite_ptr) const;
 };
 #endif
