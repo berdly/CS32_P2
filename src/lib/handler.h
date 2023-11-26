@@ -46,7 +46,7 @@ public:
     PlayerHandler(ShaderProg& prog);
     bool update(GLFWwindow* window, float dt);
     void draw() const;
-    void checkCollisions(const ExpendableObjectHandler&);
+    bool checkCollisions(const ExpendableObjectHandler&);
 };
 #endif
 

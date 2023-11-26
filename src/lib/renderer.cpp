@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 //s
-Renderer::Renderer(float* vertices, size_t size, ShaderProg& prog) : VAO{}, transform_addr{ prog.get_uniform_addr("transform") }, shader{ prog } {
+Renderer::Renderer(const float* vertices, size_t size, ShaderProg& prog) : VAO{}, transform_addr{ prog.get_uniform_addr("transform") }, shader{ prog } {
     //creates a VBO and saves the interpretation info in a VAO for later use
     unsigned VBO;
     glGenBuffers(1, &VBO);

@@ -27,11 +27,12 @@ void PlayerHandler::draw() const{
 }
 bool PlayerHandler::checkCollisions(const ExpendableObjectHandler& handler) {
     for(const auto& obj : handler.get_objects()){
-        if(obj.pos.in(this->player.get_pos())){
+        if(obj.pos->in(this->player.get_pos())){
             this->health--;
             return health == 0;
         }
     }
+    return false;
 }
 /*
 class ExpendableObjectHandler {
@@ -48,15 +49,16 @@ public:
     const std::vector<ExpendableObject>& get_objects() const;
 };
 */
-ExpendableObjectHandler::ExpendableObjectHandler(const float[] verts, size_t size_verts, ShaderProg& prog) 
-    : entities{}, renderer{verts, size, prog} {}
+ExpendableObjectHandler::ExpendableObjectHandler(const float verts[], size_t size_verts, ShaderProg& prog)
+    : entities{}, renderer{verts, size_verts, prog} {}
 std::vector<glm::vec3> ExpendableObjectHandler::update(float dt){
     std::vector<glm::vec3> spawn_points;
     for(auto& obj : entities){
         if(obj.active && obj.pos->update(dt)){
-            spawn_points.emplace_back{obj.pos->get_pos(), obj.pos->rotation()}
+            spawn_points.emplace_back(obj.pos->get_pos(), obj.pos->rotation());
         }
     }
+    return spawn_points;
 }
 
 void ExpendableObjectHandler::draw() const{
