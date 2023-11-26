@@ -14,8 +14,6 @@
 #include <vector>
 #include <utility>
 
-
- init_player()
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
@@ -58,7 +56,7 @@ int main(int argc, char * argv[]) {
     shaderProg.use();
     Renderer renderer{ver, sizeof(ver), shaderProg};
 
-    PlayerPos triangle{glm::vec2{0.0, 0.0f}, glm::vec2{1.0f, 0.5f}};
+    PlayerPos player{ glm::vec2{0.0f, 0.0f} };
     float last = glfwGetTime();
 
     while (!glfwWindowShouldClose(window)) {
@@ -67,10 +65,10 @@ int main(int argc, char * argv[]) {
         last = now;
 
         processInput(window);
-        triangle.process_input(window);
+        player.process_input(window);
+        player.update(dt);
         glClear(GL_COLOR_BUFFER_BIT);
-        triangle.update(dt);
-        renderer.draw(triangle);
+        renderer.draw(player);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

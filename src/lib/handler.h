@@ -2,13 +2,13 @@
 #include "entity.h"
 #include "renderer.h"
 #include <memory>
-#include 
+#include <tuple>
 class PlayerHandler{
     static constexpr float[] vertices;
     Player player;
     Renderer renderer;
     void spawn();
-    void update(GLFWwindow* window, float dt);
+    bool update(GLFWwindow* window, float dt);
 }
 
 //For enemies and bullets,
@@ -21,13 +21,17 @@ struct ExpendableObject{
 //handles groups of expendable objects
 class ExpendableObjectHandler{
     const float[] vertices;
+    size_t num_vertices;
     std::vector<ExpendableObject> entities;
     Renderer renderer;
-    void prune();
 public:
-//spawns new instance of ExpendableObject
-    void spawn();
-    void update();
+    //depends on OpenGL being already initialized
+    ExpendableObjectHandler(const float[] verts, size_t size_verts); //: vertices{verts}, num_vertices{size_verts}
+    std::vector<glm::vec3> update(float dt); //returns coords and angle for any bullets generated
+    virtual void spawn() = 0;
+    void prune(); //removes inactive objects
     void collide(const ExpendableObjectHandler& hitboxes); //for bullets to hit enemies
 }
+
+
 
