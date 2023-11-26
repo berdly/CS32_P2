@@ -10,6 +10,8 @@ Angle determines the orientation with respect to the x-axis in radians.
 #ifndef ENTITY_H
 #define ENTITY_H
 #include <glm/glm.hpp>
+
+#include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <algorithm>
 #include <stdexcept>
