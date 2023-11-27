@@ -9,12 +9,15 @@ Angle determines the orientation with respect to the x-axis in radians.
 */
 #ifndef ENTITY_H
 #define ENTITY_H
+
+#define NOMINMAX
 #include <glm/glm.hpp>
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <algorithm>
 #include <stdexcept>
+
 class Entity {
 protected:
     glm::vec2 position;
@@ -45,8 +48,9 @@ public:
 //testing update
 class PlayerPos : public Entity {
     bool wasdj[5];
+    float cooldown;
 public:
-    PlayerPos(const glm::vec2 pos) : Entity{ pos, glm::vec2{0.05f, 0.1f } }, wasdj{ false, false, false, false, false } {}
+    PlayerPos(const glm::vec2 pos) : Entity{ pos, glm::vec2{0.05f, 0.1f } }, wasdj{ false, false, false, false, false }, cooldown{0.0f} {}
     void process_input(GLFWwindow* window){
         wasdj[0] = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
         wasdj[1] = glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
@@ -75,15 +79,22 @@ public:
         position.y = std::clamp(position.y, -1.0f, 1.0f);
 
         speed -= dt / 2000.0f;
-        return wasdj[4];
+        cooldown -= dt;
+        if((cooldown < 0.0f) && wasdj[4]){
+            cooldown = 0.25f;
+            return true;
+        }
+        cooldown = std::max(-1.0f, cooldown);
+        return false;
     }
 };
 
 class PlayerBullet : public Entity {
 public:
-    PlayerBullet(const glm::vec2& pos, float rot) : Entity{ pos, glm::vec2{0.05f, 0.05f}, 1.0f, rot } {}
+    PlayerBullet(const glm::vec2& pos, float rot) : Entity{ pos, glm::vec2{0.05f, 0.05f}, 1.5f, rot } {}//std::cout << "Bullet spawned at (" << this->x_pos() << ", " << this->y_pos() << ")\n"; }
     bool update(float dt) override {
-        position -= speed * glm::vec2{ 4.0f * glm::sin(angle)/3.0f, -glm::cos(angle) };
+        position -= dt * speed * glm::vec2{ 4.0f * glm::sin(angle)/3.0f, -glm::cos(angle) };
+        return false;
     }
 };
 #endif

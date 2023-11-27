@@ -51,7 +51,8 @@ int main(int argc, char * argv[]) {
     shaderProg.use();
     
     PlayerHandler player{shaderProg};
-    
+    PlayerBulletHandler bullets{shaderProg};
+
     float last = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
         float now = glfwGetTime();
@@ -59,9 +60,13 @@ int main(int argc, char * argv[]) {
         last = now;
 
         processInput(window);
-        player.update(window, dt);
+        if(player.update(window, dt)){
+            bullets.spawn(player.get_coord());
+        }
+        bullets.update(dt);
         glClear(GL_COLOR_BUFFER_BIT);
         player.draw();
+        bullets.draw();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
