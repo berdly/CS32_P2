@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12.2)
 project(SpaceShooter)
-
+set(CMAKE_C_COMPILER_WORKS TRUE)
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
