@@ -19,8 +19,8 @@ add_library(glfw glfw_impl)
 target_link_libraries(main PUBLIC lib glad glfw)
 target_link_libraries(lib PUBLIC glad glfw)
 
-target_compile_features(main PUBLIC cxx_std_17)
-target_compile_features(lib PUBLIC cxx_std_17)
+add_compile_options(main PUBLIC -std=c++17)
+add_compile_options(lib PUBLIC -std=c++17)
 
 target_include_directories(main PUBLIC src/lib dependencies/glad/include dependencies/glfw/include dependencies/headers dependencies/headers/glm)
 target_include_directories(lib PUBLIC src/lib dependencies/glad/include dependencies/glfw/include dependencies/headers dependencies/headers/glm)
