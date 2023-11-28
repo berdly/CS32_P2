@@ -14,7 +14,7 @@ Angle determines the orientation with respect to the x-axis in radians.
 #include <glm/glm.hpp>
 
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 #include <algorithm>
 #include <stdexcept>
 
