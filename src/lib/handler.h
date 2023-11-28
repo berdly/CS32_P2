@@ -54,7 +54,7 @@ public:
 };
 
 class PlayerBulletHandler : public ExpendableObjectHandler {
-    static constexpr float vertices[] = {
+    static const float vertices[] = {
         -0.0125f, -0.0125f, 0.0f,
         -0.0125f, 0.0125f, 0.0f,
         0.0125f, 0.0125f, 0.0f,
