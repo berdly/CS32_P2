@@ -13,7 +13,7 @@ the screen to draw each vertex allowing for the same shape to be drawn many time
 class Renderer {
     unsigned VAO;
     unsigned transform_addr;
-    ShaderProg& shader;
+    const ShaderProg& shader;
 public:
     Renderer(const float* vertices, size_t size, ShaderProg& shader);
     void draw(const Entity& sprite) const;
