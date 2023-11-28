@@ -34,11 +34,6 @@ GLFWwindow* init_window() {
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
     glViewport(0, 0, 600, 800);
     glfwSetFramebufferSizeCallback(mwindow, frame_buffer_size_callback);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    
-    glEnable(GL_CULL_FACE); // cull face
-    glCullFace(GL_BACK); // cull back face
-    glFrontFace(GL_CW);
     
     return mwindow;
 }
@@ -78,7 +73,11 @@ int main(int argc, char * argv[]) {
 }
 */
 
-
+int last;
+PlayerHandler player;
+PlayerBulletHandler bullets;
+ShaderProg shaderProg;
+bool wasdj[5];
 
 int window2 = 0, window = 0, width = 400, height = 400;
 
@@ -92,9 +91,14 @@ void display()
 }
 
 void init(){
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    
+    glEnable(GL_CULL_FACE); // cull face
+    glCullFace(GL_BACK); // cull back face
+    glFrontFace(GL_CW);
     last = glutGet(GLUT_ELAPSED_TIME);
     float dt;
-    ShaderProg shaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
+    shaderProg = ShaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
     shaderProg.use();
     
     player = PlayerHandler{shaderProg};
@@ -146,10 +150,6 @@ void keyboard_up_func(unsigned char key, int x, int y)
 
 }
 
-int last;
-PlayerHandler player;
-PlayerBulletHandler bullets;
-bool wasdj[5];
 int main(int argc, char **argv)
 {
     // Initialization stuff
@@ -164,7 +164,8 @@ int main(int argc, char **argv)
     window = glutCreateWindow("Window 1");
     glutDisplayFunc(display);
     glutIdleFunc(idle);
-    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyboard_func);
+    glutReshapeFunc(keyboard_up_func);
     glutInitWindowPosition(100,100);
 
 
