@@ -4,8 +4,7 @@
 #include "entity.h"
 #include "renderer.h"
 #include "shaderprog.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <GL/glut.h>
 #include <memory>
 
 //For enemies and bullets,
@@ -41,7 +40,7 @@ class PlayerHandler {
     Renderer renderer;
 public:
     PlayerHandler(ShaderProg& prog);
-    bool update(GLFWwindow* window, float dt);
+    bool update(float* input, float dt);
     void draw() const;
     void prune();
     bool checkCollisions(const ExpendableObjectHandler&);
