@@ -15,7 +15,7 @@ class Renderer {
     unsigned transform_addr;
     const ShaderProg& shader;
 public:
-    Renderer(const float* vertices, size_t size, ShaderProg& shader);
+    Renderer(const float* vertices, size_t size, const ShaderProg& shader);
     void draw(const Entity& sprite) const;
     void draw(const Entity* sprite_ptr) const;
 };
