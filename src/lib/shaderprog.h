@@ -20,8 +20,8 @@ class ShaderProg {
 	unsigned id;
 public:
 	ShaderProg(const std::string& vSource, const std::string& fSource);
-	void use();
-	unsigned get_uniform_addr(const std::string&);
+	void use() const;
+	unsigned get_uniform_addr(const std::string&) const;
 
 	void setBool(const std::string&, bool);
 	void setBool(unsigned, bool);
@@ -32,8 +32,8 @@ public:
 	void setFloat(const std::string&, float);
 	void setFloat(unsigned, float);
 
-	void setMatrix(const std::string&, float*);
-	void setMatrix(unsigned, float*);
+	void setMatrix(const std::string&, float*) const;
+	void setMatrix(unsigned, float*) const;
 	/*
 	template<typename T>
 	void setArr(const std::string&, T*);
