@@ -8,14 +8,11 @@ file(GLOB_RECURSE source_executable      src/*.cpp)
 file(GLOB_RECURSE source_lib_headers src/lib/*.h)
 file(GLOB_RECURSE source_lib_impl src/lib/*.cpp)
 
-file(GLOB_RECURSE glfw_impl dependencies/glfw/src/*.c)
-file(GLOB_RECURSE glfw_include dependencies/glfw/include/*.h)
-
 add_executable(main ${source_executable})
 add_library(lib ${source_lib_impl})
 
-target_link_libraries(main PUBLIC lib glad glfw)
-target_link_libraries(lib PUBLIC glad glfw)
+target_link_libraries(main PUBLIC lib glut)
+target_link_libraries(lib PUBLIC glut)
 
 target_include_directories(main PUBLIC src/lib dependencies/headers dependencies/headers/glm)
 target_include_directories(lib PUBLIC src/lib dependencies/headers dependencies/headers/glm)
