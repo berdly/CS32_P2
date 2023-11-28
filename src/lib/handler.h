@@ -36,11 +36,6 @@ public:
 };
 
 class PlayerHandler {
-    static constexpr float vertices[] = {
-            -0.025f, -0.05f, 0.0f,
-            0.0f, 0.05f, 0.0f,
-            0.025f, -0.05f, 0.0f
-    };
     PlayerPos player;
     unsigned health;
     Renderer renderer;
@@ -54,12 +49,6 @@ public:
 };
 
 class PlayerBulletHandler : public ExpendableObjectHandler {
-    static const float vertices[] = {
-        -0.0125f, -0.0125f, 0.0f,
-        -0.0125f, 0.0125f, 0.0f,
-        0.0125f, 0.0125f, 0.0f,
-        0.0125f, -0.0125f, 0.0f,
-    };
 public:
     PlayerBulletHandler(ShaderProg & prog);
     void spawn(const glm::vec3& coord);
