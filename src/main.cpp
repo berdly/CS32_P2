@@ -6,9 +6,8 @@
 #include "renderer.h"
 #include "handler.h"
 //OpenGL function loading
-#include <glad/glad.h>
 //window and input handling
-#include <GLFW/glfw3.h>
+#include <GL/glut.h> //i think it goes like this
 // Standard Headers
 #include <iostream>
 #include <vector>
