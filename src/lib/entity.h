@@ -13,8 +13,7 @@ Angle determines the orientation with respect to the x-axis in radians.
 #define NOMINMAX
 #include <glm/glm.hpp>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <GL/glut.h>
 #include <algorithm>
 #include <stdexcept>
 
@@ -51,12 +50,8 @@ class PlayerPos : public Entity {
     float cooldown;
 public:
     PlayerPos(const glm::vec2 pos) : Entity{ pos, glm::vec2{0.05f, 0.1f } }, wasdj{ false, false, false, false, false }, cooldown{0.0f} {}
-    void process_input(GLFWwindow* window){
-        wasdj[0] = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
-        wasdj[1] = glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
-        wasdj[2] = glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
-        wasdj[3] = glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS;
-        wasdj[4] = glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS;
+    void process_input(bool* inputs){
+        wasdj = inputs;
     }
     bool update(float dt) override {
         if(wasdj[0]){
