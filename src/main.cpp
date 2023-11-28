@@ -97,15 +97,15 @@ void init(){
     ShaderProg shaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
     shaderProg.use();
     
-    PlayerHandler player{shaderProg};
-    PlayerBulletHandler bullets{shaderProg};
+    player = PlayerHandler{shaderProg};
+    bullets = PlayerBulletHandler{shaderProg};
 }
 
 void idle(){
-    now = glutGet(GLUT_ELAPSE_TIME);
-    dt = (last - now) / 1000.0f;
+    int now = glutGet(GLUT_ELAPSE_TIME);
+    float dt = (last - now) / 1000.0f;
     last = now;
-    if(player.update(dt, inputs)){
+    if(player.update(dt, wasdj)){
             bullets.spawn(player.get_coord());
     }
     bullets.update(dt);
@@ -117,6 +117,39 @@ void reshape (int w, int h)
     glutPostRedisplay();
 }
 
+void keyboard_func(unsigned char key, int x, int y) 
+{
+     switch (key) 
+    {    
+       case 'w' : wasdj[0] = true;   break;
+       case 'a':  wasdj[1] = true;  ;  break;
+       case 's' : wasdj[2] = true;  ;  break;
+       case 'd' : wasdj[3] = true;  ;  break;
+        case 'j' : wasdj[4] = true; ; break;
+        default:
+            break;
+    }
+}
+
+void keyboard_up_func(unsigned char key, int x, int y) 
+{
+     switch (key) 
+    {    
+       case 'w' : wasdj[0] = false;   break;
+       case 'a':  wasdj[1] = false;  ;  break;
+       case 's' : wasdj[2] = false;  ;  break;
+       case 'd' : wasdj[3] = false;  ;  break;
+        case 'j' : wasdj[4] = false; ; break;
+        default:
+            break;
+    }
+
+}
+
+int last;
+PlayerHandler player;
+PlayerBulletHandler bullets;
+bool wasdj[5];
 int main(int argc, char **argv)
 {
     // Initialization stuff
@@ -130,6 +163,7 @@ int main(int argc, char **argv)
     // Create  window main
     window = glutCreateWindow("Window 1");
     glutDisplayFunc(display);
+    glutIdleFunc(idle);
     glutReshapeFunc(reshape);
     glutInitWindowPosition(100,100);
 
