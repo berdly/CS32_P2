@@ -3,6 +3,7 @@ project(SpaceShooter)
 
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CPP_COMPILER g++)
+set(CMAKE_CXX_FLAGS "-std=c++17")
 
 file(GLOB_RECURSE source_executable      src/*.cpp)
 file(GLOB_RECURSE source_lib_headers src/lib/*.h)
