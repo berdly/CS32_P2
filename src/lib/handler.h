@@ -50,7 +50,7 @@ public:
     void draw() const;
     void prune();
     bool checkCollisions(const ExpendableObjectHandler&);
-    const glm::vec3& get_coord();
+    glm::vec3 get_coord();
 };
 
 class PlayerBulletHandler : public ExpendableObjectHandler {
