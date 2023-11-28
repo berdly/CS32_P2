@@ -84,8 +84,8 @@ void ExpendableObjectHandler::draw() const{
     }
 }
 void ExpendableObjectHandler::prune(){
-    auto itr{std::remove_if(entities.begin(), entities.end(), [](const auto& obj){return !obj.active;})};
-    entities.erase(itr, entities.end());
+    //auto itr{std::remove_if(entities.begin(), entities.end(), [](const auto& obj){return !obj.active;})};
+    //entities.erase(itr, entities.end());
 }
 const std::vector<ExpendableObject>& ExpendableObjectHandler::get_objects() const { return entities; }
 
