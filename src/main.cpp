@@ -1,16 +1,16 @@
 //class to handle dynamic shader loading
-//#include "shaderprog.h"
+#include "shaderprog.h"
 //class which represents game objects
-//#include "entity.h"
+#include "entity.h"
 //class which handles rendering of entities
-//#include "renderer.h"
-//#include "handler.h"
+#include "renderer.h"
+#include "handler.h"
 //OpenGL function loading
 //window and input handling
 #include <GL/glut.h> //i think it goes like this
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <string>
 // Standard Headers
 //#include <iostream>
 //#include <vector>
@@ -82,24 +82,35 @@ int main(int argc, char * argv[]) {
 
 int window2 = 0, window = 0, width = 400, height = 400;
 
-void display(void)
+void display()
 {
-    glClearColor(0.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-    printf("display1\n");
-    glFlush();
+    player.draw();
+    bullets.draw();
+
+    glutSwapBuffers(window);
 }
 
-void display2(void)
-{
-    glClearColor(1.0, 0.0, 0.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-    printf("display2\n");
-    glFlush();
+void init(){
+    last = glutGet(GLUT_ELAPSED_TIME);
+    float dt;
+    ShaderProg shaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
+    shaderProg.use();
+    
+    PlayerHandler player{shaderProg};
+    PlayerBulletHandler bullets{shaderProg};
 }
 
+void idle(){
+    now = glutGet(GLUT_ELAPSE_TIME);
+    dt = (last - now) / 1000.0f;
+    last = now;
+    if(player.update(dt, inputs)){
+            bullets.spawn(player.get_coord());
+    }
+    bullets.update(dt);
+    glutPostRedisplay();
+}
 void reshape (int w, int h)
 {
     glViewport(0,0,(GLsizei)w,(GLsizei)h);
@@ -110,7 +121,10 @@ int main(int argc, char **argv)
 {
     // Initialization stuff
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGB);
+    glutInitContextVersion( 3, 3 );
+    glutInitContextProfile( GLUT_CORE_PROFILE );
+    
+    glutInitDisplayMode(GLUT_DOUBLE, GLUT_RGB);
     glutInitWindowSize(width, height);
 
     // Create  window main
@@ -119,10 +133,6 @@ int main(int argc, char **argv)
     glutReshapeFunc(reshape);
     glutInitWindowPosition(100,100);
 
-    // Create second window
-    window2 = glutCreateWindow("Window 2");
-    glutDisplayFunc(display2);
-    glutReshapeFunc(reshape);
 
     // Enter Glut Main Loop and wait for events
     glutMainLoop();
