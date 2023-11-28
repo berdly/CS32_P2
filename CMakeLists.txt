@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8.12.2)
 project(SpaceShooter)
 
 set(CMAKE_C_COMPILER gcc)
-set(CMAKE_CPP_COMPILER g++)
-set(CMAKE_CPP_FLAGS "${CMAKE_CPP_FLAGS} -std=c++17")
+set(CMAKE_CXX_COMPILER g++)
+set(CMAKE_CXX_FLAGS "${CMAKE_CPP_FLAGS} -std=c++17")
 
 file(GLOB_RECURSE source_executable      src/*.cpp)
 file(GLOB_RECURSE source_lib_headers src/lib/*.h)
