@@ -5,9 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <filesystem>
 
-namespace fs = std::filesystem;
 #include <glad/glad.h>
 /*
 A shader program is a set of rendering instructions used by OpenGL. 
@@ -21,9 +19,9 @@ entities as there's no need for added complexity.
 class ShaderProg {
 	unsigned id;
 public:
-	ShaderProg(const fs::path& vSource, const fs::path& fSource);
-	void use();
-	unsigned get_uniform_addr(const std::string&);
+	ShaderProg(const std::string& vSource, const std::string& fSource);
+	void use() const;
+	unsigned get_uniform_addr(const std::string&) const;
 
 	void setBool(const std::string&, bool);
 	void setBool(unsigned, bool);
@@ -34,8 +32,8 @@ public:
 	void setFloat(const std::string&, float);
 	void setFloat(unsigned, float);
 
-	void setMatrix(const std::string&, float*);
-	void setMatrix(unsigned, float*);
+	void setMatrix(const std::string&, float*) const;
+	void setMatrix(unsigned, float*) const;
 	/*
 	template<typename T>
 	void setArr(const std::string&, T*);

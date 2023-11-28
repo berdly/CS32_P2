@@ -18,7 +18,19 @@ class PlayerHandler {
     void checkCollisions(const ExpendableObjectHandler&);
 };
 */
-PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 3 }, renderer{ vertices, sizeof(vertices), prog } {}
+  const float Bvertices[] = {
+        -0.0125f, -0.0125f, 0.0f,
+        -0.0125f, 0.0125f, 0.0f,
+        0.0125f, 0.0125f, 0.0f,
+        0.0125f, -0.0125f, 0.0f,
+    };
+
+const float Pvertices[] = {
+            -0.025f, -0.05f, 0.0f,
+            0.0f, 0.05f, 0.0f,
+            0.025f, -0.05f, 0.0f
+    };
+PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 3 }, renderer{ Pvertices, sizeof(Pvertices), prog } {}
 bool PlayerHandler::update(GLFWwindow* window, float dt) {
     this->player.process_input(window);
     return this->player.update(dt);
@@ -35,7 +47,7 @@ bool PlayerHandler::checkCollisions(const ExpendableObjectHandler& handler) {
     }
     return false;
 }
-const glm::vec3& PlayerHandler::get_coord(){
+glm::vec3 PlayerHandler::get_coord(){
     return glm::vec3(player.get_pos(), player.rotation());
 }
 /*
@@ -84,12 +96,12 @@ void ExpendableObjectHandler::draw() const{
     }
 }
 void ExpendableObjectHandler::prune(){
-    auto itr{std::remove_if(entities.begin(), entities.end(), [](const auto& obj){return !obj.active;})};
-    entities.erase(itr, entities.end());
+    //auto itr{std::remove_if(entities.begin(), entities.end(), [](const auto& obj){return !obj.active;})};
+    //entities.erase(itr, entities.end());
 }
 const std::vector<ExpendableObject>& ExpendableObjectHandler::get_objects() const { return entities; }
 
-PlayerBulletHandler::PlayerBulletHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), prog} {}
+PlayerBulletHandler::PlayerBulletHandler(ShaderProg& prog) : ExpendableObjectHandler{Bvertices, sizeof(Bvertices), prog} {}
 
 void PlayerBulletHandler::spawn(const glm::vec3& coord) {
     this->entities.emplace_back(true, new PlayerBullet{ glm::vec2{coord.x, coord.y}, coord.z });

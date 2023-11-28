@@ -45,7 +45,7 @@ void processInput(GLFWwindow* window) {
 }
 
 int main(int argc, char * argv[]) {
-    auto window{ init_window() };
+    GLFWwindow* window{ init_window() };
     ShaderProg shaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
     shaderProg.use();
     

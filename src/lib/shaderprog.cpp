@@ -1,5 +1,5 @@
 #include "shaderprog.h"
-ShaderProg::ShaderProg(const fs::path& vSource, const fs::path& fSource) {
+ShaderProg::ShaderProg(const std::string& vSource, const std::string& fSource) {
 	std::string vStr, fStr;
 	std::ifstream vFile, fFile;
 	vFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -56,11 +56,11 @@ ShaderProg::ShaderProg(const fs::path& vSource, const fs::path& fSource) {
 	glDeleteShader(fAddr);
 }
 
-void ShaderProg::use() {
+void ShaderProg::use() const {
 	glUseProgram(this->id);
 }
 
-unsigned ShaderProg::get_uniform_addr(const std::string& unif) {
+unsigned ShaderProg::get_uniform_addr(const std::string& unif) const{
 	return glGetUniformLocation(this->id, unif.c_str());
 }
 void ShaderProg::setBool(const std::string& unif, bool data) {
@@ -84,9 +84,9 @@ void ShaderProg::setFloat(unsigned addr, float data) {
 	glUniform1f(addr, data);
 }
 
-void ShaderProg::setMatrix(const std::string& unif, float* data) {
+void ShaderProg::setMatrix(const std::string& unif, float* data) const{
 	glUniformMatrix4fv(this->get_uniform_addr(unif), 1, GL_FALSE, data);
 }
-void ShaderProg::setMatrix(unsigned addr, float* data) {
+void ShaderProg::setMatrix(unsigned addr, float* data) const{
 	glUniformMatrix4fv(addr, 1, GL_FALSE, data);
 }

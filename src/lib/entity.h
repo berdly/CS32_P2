@@ -14,7 +14,7 @@ Angle determines the orientation with respect to the x-axis in radians.
 #include <glm/glm.hpp>
 
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 #include <algorithm>
 #include <stdexcept>
 
@@ -71,12 +71,12 @@ public:
         if(wasdj[3]){
              angle += dt*3;
         }
-        speed = std::clamp(speed, 0.0f, 1.0f);
+        //speed = std::clamp(speed, 0.0f, 1.0f);
 
         position -= speed * glm::vec2{2.0f*glm::sin(angle)/3.0f, -glm::cos(angle)};
     
-        position.x = std::clamp(position.x, -1.0f, 1.0f);
-        position.y = std::clamp(position.y, -1.0f, 1.0f);
+        //position.x = std::clamp(position.x, -1.0f, 1.0f);
+        //position.y = std::clamp(position.y, -1.0f, 1.0f);
 
         speed -= dt / 2000.0f;
         cooldown -= dt;
