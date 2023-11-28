@@ -31,8 +31,8 @@ const float Pvertices[] = {
             0.025f, -0.05f, 0.0f
     };
 PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 3 }, renderer{ Pvertices, sizeof(Pvertices), prog } {}
-bool PlayerHandler::update(GLFWwindow* window, float dt) {
-    this->player.process_input(window);
+bool PlayerHandler::update(float* input, float dt) {
+    this->player.process_input(input);
     return this->player.update(dt);
 }
 void PlayerHandler::draw() const{
