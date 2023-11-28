@@ -35,7 +35,7 @@ bool PlayerHandler::checkCollisions(const ExpendableObjectHandler& handler) {
     }
     return false;
 }
-const glm::vec3& PlayerHandler::get_coord(){
+glm::vec3 PlayerHandler::get_coord(){
     return glm::vec3(player.get_pos(), player.rotation());
 }
 /*
