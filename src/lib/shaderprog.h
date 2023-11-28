@@ -6,7 +6,7 @@
 #include <sstream>
 #include <iostream>
 
-#include <glad/glad.h>
+#include <GL/glut.h>
 /*
 A shader program is a set of rendering instructions used by OpenGL. 
 This class handles the dynamic compilation of shaders from text files 
