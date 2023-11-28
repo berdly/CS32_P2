@@ -13,19 +13,12 @@ file(GLOB_RECURSE glfw_include dependencies/glfw/include/*.h)
 
 add_executable(main ${source_executable})
 add_library(lib ${source_lib_impl})
-add_library(glad dependencies/glad/src/glad.c)
-add_library(glfw ${glfw_impl})
 
 target_link_libraries(main PUBLIC lib glad glfw)
 target_link_libraries(lib PUBLIC glad glfw)
-target_link_libraries(glad PUBLIC dl)
-target_link_libraries(glfw PUBLIC pthread)
 
-target_include_directories(main PUBLIC src/lib dependencies/glad/include dependencies/glfw/include dependencies/headers dependencies/headers/glm)
-target_include_directories(lib PUBLIC src/lib dependencies/glad/include dependencies/glfw/include dependencies/headers dependencies/headers/glm)
-
-target_include_directories(glad PUBLIC dependencies/glad/include)
-target_include_directories(glfw PUBLIC dependencies/glfw/include)
+target_include_directories(main PUBLIC src/lib dependencies/headers dependencies/headers/glm)
+target_include_directories(lib PUBLIC src/lib dependencies/headers dependencies/headers/glm)
 
 install(TARGETS main DESTINATION ./build)
 
