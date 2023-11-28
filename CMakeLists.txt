@@ -14,7 +14,7 @@ file(GLOB_RECURSE glfw_include dependencies/glfw/include/*.h)
 add_executable(main ${source_executable})
 add_library(lib ${source_lib_impl})
 add_library(glad dependencies/glad/src/glad.c)
-add_library(glfw glfw_impl)
+add_library(glfw ${glfw_impl})
 
 target_link_libraries(main PUBLIC lib glad glfw)
 target_link_libraries(lib PUBLIC glad glfw)
