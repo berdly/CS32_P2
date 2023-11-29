@@ -60,7 +60,7 @@ int main(int argc, char * argv[]) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    //opends full screen window in release mode, smaller window for debugging
+    //opens full screen window in release mode, smaller window for debugging
 #ifdef _DEBUG
     GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2",nullptr , nullptr) };
 #else 
