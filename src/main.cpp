@@ -241,7 +241,7 @@ int main(int argc, char **argv)
     
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(width, height);
-
+    glewInit();
     // Create  window main
     window = glutCreateWindow("Window 1");
     glutDisplayFunc(display);
