@@ -74,16 +74,15 @@ public:
         speed = std::clamp(speed, 0.0f, 1.0f);
 
         position -= speed * glm::vec2{2.0f*glm::sin(angle)/3.0f, -glm::cos(angle)};
-        if((position.x*position.x) > 1.0f){
-            speed /= 0.5f*dt;
+        if(((position.x*position.x) > 1.0f) || ((position.y*position.y) > 1.0f)){
+            speed -= dt/50;
         }
-        if((position.y*position.y) > 1.0f){
-            speed /= 0.5f*dt;
+        else{
+            speed -= dt / 200.0f;
         }
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
 
-        speed -= dt / 200.0f;
         cooldown -= dt;
         if((cooldown < 0.0f) && wasdj[4]){
             cooldown = 0.25f;
