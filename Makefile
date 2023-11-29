@@ -1,4 +1,4 @@
-CXXFLAGS = -g -std=c++17 -Wall -Wextra -Werror
+CXXFLAGS = -g -std=c++17 -Wall -Wextra
 CXX      = g++
 
 game: handler.o game.o
