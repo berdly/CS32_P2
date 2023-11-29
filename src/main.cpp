@@ -69,7 +69,7 @@ int main(int argc, char * argv[]) {
 
     //opens full screen window in release mode, smaller window for debugging
 #ifdef _DEBUG
-    GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", nullptr, nullptr) };
+    GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", glfwGetPrimaryMonitor(), nullptr) };
 #else 
     GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", glfwGetPrimaryMonitor(), nullptr) };
 #endif
