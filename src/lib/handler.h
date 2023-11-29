@@ -4,7 +4,6 @@
 #include "entity.h"
 #include "renderer.h"
 #include "shaderprog.h"
-#include <GL/glut.h>
 #include <vector>
 #include <memory>
 
