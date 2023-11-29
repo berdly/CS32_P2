@@ -60,13 +60,13 @@ public:
     }
     bool update(float dt) override {
         if(wasdj[0]){
-            speed += dt/1000.0f;
+            speed += dt/100.0f;
         }
         if(wasdj[1]){
             angle -= dt*3;
         }
         if(wasdj[2]){
-            speed -= dt/1000.0f;;
+            speed -= dt/100.0f;;
         }
         if(wasdj[3]){
              angle += dt*3;
