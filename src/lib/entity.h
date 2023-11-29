@@ -50,7 +50,7 @@ class PlayerPos : public Entity {
     float cooldown;
 public:
     PlayerPos(const glm::vec2 pos) : Entity{ pos, glm::vec2{0.05f, 0.1f } }, wasdj{ false, false, false, false, false }, cooldown{0.0f} {}
-    void process_input(bool[] inputs){
+    void process_input(bool inputs[]){
         wasdj = inputs;
     }
     bool update(float dt) override {
