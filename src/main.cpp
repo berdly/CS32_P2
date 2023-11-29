@@ -179,7 +179,7 @@ void init(){
     glCullFace(GL_BACK); // cull back face
     glFrontFace(GL_CW);
     last = glutGet(GLUT_ELAPSED_TIME);
-    shaderProg = ShaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
+    shaderProg = ShaderProg{ "./shaders/vertex.vert", "./shaders/fragment.frag" };
     shaderProg.use();
     
     player = PlayerHandler{shaderProg};
