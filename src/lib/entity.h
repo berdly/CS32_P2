@@ -75,10 +75,10 @@ public:
 
         position -= speed * glm::vec2{2.0f*glm::sin(angle)/3.0f, -glm::cos(angle)};
         if((position.x*position.x) > 1.0f){
-            speed /= 0.5f;
+            speed /= 0.5f*dt;
         }
         if((position.y*position.y) > 1.0f){
-            speed /= 0.5f;
+            speed /= 0.5f*dt;
         }
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
