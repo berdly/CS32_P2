@@ -1,10 +1,10 @@
 //class to handle dynamic shader loading
-#include "shaderprog.h"
+#include "src/lib/shaderprog.h"
 //class which represents game objects
-#include "entity.h"
+#include "src/lib/entity.h"
 //class which handles rendering of entities
-#include "renderer.h"
-#include "handler.h"
+#include "src/lib/renderer.h"
+#include "src/lib/handler.h"
 //OpenGL function loading
 //window and input handling
 #include <GL/glut.h> //i think it goes like this
