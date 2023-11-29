@@ -1,7 +1,7 @@
 CXXFLAGS = -g -std=c++17 -Wall -Wextra -Werror
 CXX      = g++
 
-game: shaderprog.o renderer.o handler.o game.o
+game: handler.o game.o
 	${CXX} $(CXXFLAGS)  $^ -o $@ -lGL -lglut
 
 game.o: src/main.cpp
