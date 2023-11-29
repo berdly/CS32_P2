@@ -64,7 +64,7 @@ class PlayerBulletHandler : public ExpendableObjectHandler {
         0.0125f, 0.0125f, 0.0f,
         0.0125f, -0.0125f, 0.0f,
     };
-    static constexpr glm::vec3 objColor{0.5, 0.5, 0.0};
+    static constexpr glm::vec3 objColor{1.0f, 1.0f, 0.0};
 public:
     PlayerBulletHandler(ShaderProg & prog);
     void spawn(const glm::vec3& coord);
