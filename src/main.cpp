@@ -12,67 +12,101 @@
 #include <stdio.h>
 #include <string>
 // Standard Headers
-//#include <iostream>
-//#include <vector>
-//#include <utility>
+#include <iostream>
+#include <vector>
+#include <utility>
 
-/*
-void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
+ShaderProg::ShaderProg(const std::string& vSource, const std::string& fSource) {
+	std::string vStr, fStr;
+	std::ifstream vFile, fFile;
+	vFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	fFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	try {
+		vFile.open(vSource);
+		fFile.open(fSource);
+		std::stringstream vBuf, fBuf;
+		vBuf << vFile.rdbuf();
+		fBuf << fFile.rdbuf();
+		vStr = vBuf.str();
+		fStr = fBuf.str();
+	}
+	catch (std::ifstream::failure) {
+		std::cout << "ShaderProg file read error!\n";
+	}
+	const char* vCode{ vStr.c_str() };
+	const char* fCode{ fStr.c_str() };
+
+	unsigned vAddr{ glCreateShader(GL_VERTEX_SHADER) };
+	glShaderSource(vAddr, 1, &vCode, nullptr);
+	glCompileShader(vAddr);
+	int success;
+	glGetShaderiv(vAddr, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		char infoLog[512];
+		glGetShaderInfoLog(vAddr, 512, NULL, infoLog);
+		std::cout << "Error: Vertex ShaderProg Compilation Failed:(\n" << infoLog << '\n';
+	}
+
+	unsigned fAddr{ glCreateShader(GL_FRAGMENT_SHADER) };
+	glShaderSource(fAddr, 1, &fCode, nullptr);
+	glCompileShader(fAddr);
+	glGetShaderiv(fAddr, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		char infoLog[512];
+		glGetShaderInfoLog(fAddr, 512, NULL, infoLog);
+		std::cout << "Error: Vertex ShaderProg Compilation Failed:(\n" << infoLog << '\n';
+	}
+
+	unsigned shaderProgram{ glCreateProgram() };
+	glAttachShader(shaderProgram, vAddr);
+	glAttachShader(shaderProgram, fAddr);
+	glLinkProgram(shaderProgram);
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		char infoLog[512];
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		std::cout << "Error: Vertex ShaderProg Compilation Failed:(\n" << infoLog << '\n';
+	}
+
+	this->id = shaderProgram;
+	glDeleteShader(vAddr);
+	glDeleteShader(fAddr);
 }
 
-GLFWwindow* init_window() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", nullptr, nullptr) };
-    if (!mwindow) {
-        std::cout << "Couldn't open window.";
-    }
-    glfwMakeContextCurrent(mwindow);
-    gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-    glViewport(0, 0, 600, 800);
-    glfwSetFramebufferSizeCallback(mwindow, frame_buffer_size_callback);
-    
-    return mwindow;
-}
-void processInput(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
-    }
+void ShaderProg::use() const {
+	glUseProgram(this->id);
 }
 
-int main(int argc, char * argv[]) {
-    GLFWwindow* window{ init_window() };
-    ShaderProg shaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
-    shaderProg.use();
-    
-    PlayerHandler player{shaderProg};
-    PlayerBulletHandler bullets{shaderProg};
-
-    float last = glfwGetTime();
-    while (!glfwWindowShouldClose(window)) {
-        float now = glfwGetTime();
-        float dt{now - last};
-        last = now;
-
-        processInput(window);
-        if(player.update(window, dt)){
-            bullets.spawn(player.get_coord());
-        }
-        bullets.update(dt);
-        glClear(GL_COLOR_BUFFER_BIT);
-        player.draw();
-        bullets.draw();
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-    glfwTerminate();
+unsigned ShaderProg::get_uniform_addr(const std::string& unif) const{
+	return glGetUniformLocation(this->id, unif.c_str());
 }
-*/
+void ShaderProg::setBool(const std::string& unif, bool data) {
+	glUniform1i(this->get_uniform_addr(unif), static_cast<int>(data));
+}
+void ShaderProg::setBool(unsigned addr, bool data) {
+	glUniform1i(addr, static_cast<int>(data));
+}
 
+void ShaderProg::setInt(const std::string& unif, int data) {
+	glUniform1i(this->get_uniform_addr(unif), data);
+}
+void ShaderProg::setInt(unsigned addr, int data) {
+	glUniform1i(addr, data);
+}
+
+void ShaderProg::setFloat(const std::string& unif, float data) {
+	glUniform1f(this->get_uniform_addr(unif), data);
+}
+void ShaderProg::setFloat(unsigned addr, float data) {
+	glUniform1f(addr, data);
+}
+
+void ShaderProg::setMatrix(const std::string& unif, float* data) const{
+	glUniformMatrix4fv(this->get_uniform_addr(unif), 1, GL_FALSE, data);
+}
+void ShaderProg::setMatrix(unsigned addr, float* data) const{
+	glUniformMatrix4fv(addr, 1, GL_FALSE, data);
+}
 int last;
 PlayerHandler player;
 PlayerBulletHandler bullets;
