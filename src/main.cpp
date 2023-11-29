@@ -166,16 +166,16 @@ void Renderer::draw(const Entity* sprite) const{
 
 void display()
 {
+    std::cerr << "displaying\n";
     glClear(GL_COLOR_BUFFER_BIT);
     player.draw();
     bullets.draw();
-    std::cerr << "displaying";
     glutSwapBuffers();
 }
 
 void init(){
+    std::cerr << "initing\n" ;
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    std::cerr << "initing" ;
     glEnable(GL_CULL_FACE); // cull face
     glCullFace(GL_BACK); // cull back face
     glFrontFace(GL_CW);
@@ -188,6 +188,7 @@ void init(){
 }
 
 void idle(){
+    std::cerr << "idling\n";
     int now = glutGet(GLUT_ELAPSED_TIME);
     float dt = (last - now) / 1000.0f;
     last = now;
@@ -196,18 +197,17 @@ void idle(){
     }
     bullets.update(dt);
     glutPostRedisplay();
-    std::cerr << "idling";
 }
 void reshape (int w, int h)
 {
+    std::cerr << "reshaping\n";
     glViewport(0,0,(GLsizei)w,(GLsizei)h);
     glutPostRedisplay();
-    std::cerr << "reshaping";
 }
 
 void keyboard_func(unsigned char key, int x, int y) 
 {
-    std::cerr << "input";
+    std::cerr << "input\n";
      switch (key) 
     {    
        case 'w' : wasdj[0] = true;   break;
@@ -222,7 +222,7 @@ void keyboard_func(unsigned char key, int x, int y)
 
 void keyboard_up_func(unsigned char key, int x, int y) 
 {
-    std::cerr << "input up";
+    std::cerr << "input up\n";
      switch (key) 
     {    
        case 'w' : wasdj[0] = false;   break;
