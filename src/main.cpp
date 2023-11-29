@@ -16,6 +16,15 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+
+ShaderProg::ShaderProg(): id{} {}
+Renderer::Renderer() : VAO{}, transform_addr{} {}
+PlayerHandler::PlayerHandler() : player{}, health{}, renderer{} {}
+
+ExpendableObject::ExpendableObject() : active{}, pos{nullptr} {}
+ExpendableObjectHandler::ExpendableObjectHandler() : renderer{}, cleanup{}, entities{} {}
+PlayerBulletHandler::PlayerBulletHandler() : ExpendableObjectHandler{} {}
+
 int last;
 PlayerHandler player;
 PlayerBulletHandler bullets;
@@ -23,14 +32,6 @@ ShaderProg shaderProg;
 bool wasdj[5];
 
 int window2 = 0, window = 0, width = 400, height = 400;
-
-ShaderProg::ShaderProg(): id{} {}
-Renderer::Renderer() : VAO{}, transform_addr{}, shader{} {}
-PlayerHandler::PlayerHandler() : player{}, health{}, renderer{}
-
-ExpendableObject::ExpendableObject() : active{}, pos{nullptr} {}
-ExpendableObjectHandler::ExpendableObjectHandler() : renderer{}, cleanup{}, entities{} {}
-PlayerBulletHandler::PlayerBulletHandler() : ExpendableObjectHandler{} {}
 
 ShaderProg::ShaderProg(const std::string& vSource, const std::string& fSource) {
 	std::string vStr, fStr;
