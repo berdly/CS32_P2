@@ -66,7 +66,7 @@ public:
             angle -= dt*3;
         }
         if(wasdj[2]){
-            speed -= dt/100.0f;;
+            speed -= dt/50.0f;;
         }
         if(wasdj[3]){
              angle += dt*3;
