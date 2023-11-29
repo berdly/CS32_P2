@@ -16,6 +16,14 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+int last;
+PlayerHandler player;
+PlayerBulletHandler bullets;
+ShaderProg shaderProg;
+bool wasdj[5];
+
+int window2 = 0, window = 0, width = 400, height = 400;
+
 ShaderProg::ShaderProg(): id{} {}
 Renderer::Renderer() : VAO{}, transform_addr{}, shader{} {}
 PlayerHandler::PlayerHandler() : player{}, health{}, renderer{}
@@ -221,14 +229,6 @@ void keyboard_up_func(unsigned char key, int x, int y)
     }
 
 }
-
-int last;
-PlayerHandler player;
-PlayerBulletHandler bullets;
-ShaderProg shaderProg;
-bool wasdj[5];
-
-int window2 = 0, window = 0, width = 400, height = 400;
 
 int main(int argc, char **argv)
 {
