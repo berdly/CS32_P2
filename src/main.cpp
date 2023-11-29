@@ -246,7 +246,8 @@ int main(int argc, char **argv)
     glutDisplayFunc(display);
     glutIdleFunc(idle);
     glutKeyboardFunc(keyboard_func);
-    glutReshapeFunc(keyboard_up_func);
+    glutKeyboardUpFunc(keyboard_up_func);
+    glutReshapeFunc(reshape);
     glutInitWindowPosition(100,100);
 
 
