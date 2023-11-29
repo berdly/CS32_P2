@@ -5,10 +5,10 @@ game: handler.o game.o
 	${CXX} $(CXXFLAGS) $^ -o $@ -lGL -lglut
 
 game.o: src/main.cpp
-	${CXX} $(CXXFLAGS)  -I/dependencies/headers $^ -c -o $@ -lGL -lglut
+	${CXX} $(CXXFLAGS)  -I./dependencies/headers $^ -c -o $@ -lGL -lglut
 
 handler.o: src/lib/handler.cpp
-	${CXX} $(CXXFLAGS) -I/dependencies/headers $^ -c -o $@ -lGL -lglut
+	${CXX} $(CXXFLAGS) -I./dependencies/headers $^ -c -o $@ -lGL -lglut
 
 clean:
 	rm -f *.o game
