@@ -170,7 +170,9 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);
     player.draw();
     bullets.draw();
+    std::cout << "done drawing"
     glutSwapBuffers();
+    std::cerr << "done displaying\n";
 }
 
 void init(){
