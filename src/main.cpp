@@ -169,13 +169,13 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);
     player.draw();
     bullets.draw();
-    std::cout << "displaying";
+    std::cerr << "displaying";
     glutSwapBuffers();
 }
 
 void init(){
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    std::cout << "initing";
+    std::cerr << "initing" ;
     glEnable(GL_CULL_FACE); // cull face
     glCullFace(GL_BACK); // cull back face
     glFrontFace(GL_CW);
@@ -196,18 +196,18 @@ void idle(){
     }
     bullets.update(dt);
     glutPostRedisplay();
-    std::cout << "idling";
+    std::cerr << "idling";
 }
 void reshape (int w, int h)
 {
     glViewport(0,0,(GLsizei)w,(GLsizei)h);
     glutPostRedisplay();
-    std::cout << "reshaping";
+    std::cerr << "reshaping";
 }
 
 void keyboard_func(unsigned char key, int x, int y) 
 {
-    std::cout << "input";
+    std::cerr << "input";
      switch (key) 
     {    
        case 'w' : wasdj[0] = true;   break;
@@ -222,7 +222,7 @@ void keyboard_func(unsigned char key, int x, int y)
 
 void keyboard_up_func(unsigned char key, int x, int y) 
 {
-    std::cout << "input up";
+    std::cerr << "input up";
      switch (key) 
     {    
        case 'w' : wasdj[0] = false;   break;
