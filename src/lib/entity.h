@@ -78,7 +78,7 @@ public:
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
 
-        speed -= dt / 2000.0f;
+        speed -= dt / 200.0f;
         cooldown -= dt;
         if((cooldown < 0.0f) && wasdj[4]){
             cooldown = 0.25f;
