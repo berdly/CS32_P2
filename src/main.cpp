@@ -180,7 +180,7 @@ void idle(){
     int now = glutGet(GLUT_ELAPSE_TIME);
     float dt = (last - now) / 1000.0f;
     last = now;
-    if(player.update(dt, wasdj)){
+    if(player.update(wasdj, dt)){
             bullets.spawn(player.get_coord());
     }
     bullets.update(dt);
