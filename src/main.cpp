@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-
+#include <random>
 #ifdef _DEBUG
 #  define DBG(x) do { std::cerr << x << '\n'; } while (false)
 #else
@@ -20,6 +20,13 @@
 //window and input handling
 #include <GLFW/glfw3.h>
 // Standard Headers
+typedef std::mt19937 RNG;
+//usage gen_range<-100, 100>(gen); produces random number between -100 and 100
+template<int low, int up>
+int gen_range(RNG& gen){
+    static std::uniform_int_distribution< int > dist(low, up);
+    return dist(gen);
+}
 
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -62,7 +69,7 @@ int main(int argc, char * argv[]) {
 
     //opens full screen window in release mode, smaller window for debugging
 #ifdef _DEBUG
-    GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2",nullptr , nullptr) };
+    GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", nullptr, nullptr) };
 #else 
     GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", glfwGetPrimaryMonitor(), nullptr) };
 #endif
@@ -88,6 +95,8 @@ int main(int argc, char * argv[]) {
     PlayerBulletHandler bullets{shaderProg};
 
     float last = glfwGetTime();
+    RNG rng{std::random_device{}()}; //seeds rng
+
     while (!glfwWindowShouldClose(mwindow)) {
         float now = glfwGetTime();
         float dt{now - last};

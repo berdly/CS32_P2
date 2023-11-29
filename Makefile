@@ -5,7 +5,7 @@ RELEASEFLAGS = -O2 -std=c++17
 play: release
 	./release
 
-release: rshaderprog.o rrenderer.o rhandler.o rgame.o glad.o:
+release: rshaderprog.o rrenderer.o rhandler.o rgame.o rglad.o:
 	${CXX} $(RELEASEFLAGS) -L./dependencies/lib -I./dependencies/headers $^ -o $@ -lGL -lglfw3
 
 	${CXX} $(CXXFLAGS) -L./dependencies/lib -I./dependencies/headers -D_DEBUG $^ -o $@ -lGL -lglfw3
@@ -21,7 +21,9 @@ rrenderer.o: src/lib/renderer.cpp
 
 rshaderprog.o: src/lib/shaderprog.cpp
 	${CXX} $(RELEASEFLAGS) -L./dependencies/lib -I./dependencies/headers $^ -c -o $@ -lGL -lglfw3
-
+rglad.o: dependencies/src/glad.c
+	${CC} -I./dependencies/headers $^ -c -o $@ -lGL
+	
 game: shaderprog.o renderer.o handler.o game.o glad.o
 	${CXX} $(CXXFLAGS) -L./dependencies/lib -I./dependencies/headers -D_DEBUG $^ -o $@ -lGL -lglfw3
 
