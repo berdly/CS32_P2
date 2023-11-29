@@ -179,7 +179,6 @@ void init(){
     glCullFace(GL_BACK); // cull back face
     glFrontFace(GL_CW);
     last = glutGet(GLUT_ELAPSED_TIME);
-    float dt;
     shaderProg = ShaderProg{ "../shaders/vertex.vert", "../shaders/fragment.frag" };
     shaderProg.use();
     
@@ -243,6 +242,8 @@ int main(int argc, char **argv)
     glutInitWindowSize(width, height);
     // Create  window main
     window = glutCreateWindow("Window 1");
+
+    glutInitFunc(init);
     glutDisplayFunc(display);
     glutIdleFunc(idle);
     glutKeyboardFunc(keyboard_func);
