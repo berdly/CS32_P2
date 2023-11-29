@@ -7,6 +7,7 @@
 #include "../src/lib/handler.h"
 //OpenGL function loading
 //window and input handling
+#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/freeglut.h> //i think it goes like this
 #include <stdlib.h>
