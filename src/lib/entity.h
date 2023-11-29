@@ -46,7 +46,7 @@ public:
 
 //testing update
 class PlayerPos : public Entity {
-    bool wasdj[5];
+    bool wasdj[];
     float cooldown;
 public:
     PlayerPos(const glm::vec2 pos) : Entity{ pos, glm::vec2{0.05f, 0.1f } }, wasdj{ false, false, false, false, false }, cooldown{0.0f} {}
