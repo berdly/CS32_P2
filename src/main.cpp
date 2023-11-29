@@ -243,7 +243,7 @@ int main(int argc, char **argv)
     // Create  window main
     window = glutCreateWindow("Window 1");
 
-    glutInitFunc(init);
+    init();
     glutDisplayFunc(display);
     glutIdleFunc(idle);
     glutKeyboardFunc(keyboard_func);
