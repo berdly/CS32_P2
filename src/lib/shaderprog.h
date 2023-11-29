@@ -20,6 +20,7 @@ class ShaderProg {
 	unsigned id;
 public:
 	ShaderProg(const std::string& vSource, const std::string& fSource);
+	ShaderProg();
 	void use() const;
 	unsigned get_uniform_addr(const std::string&) const;
 

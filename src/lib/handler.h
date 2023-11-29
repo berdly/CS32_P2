@@ -16,6 +16,7 @@ struct ExpendableObject {
     //must use the Entity interface
     std::unique_ptr<Entity> pos;
     ExpendableObject(bool state, Entity* type) : active{ state }, pos{ type } {};
+    ExpendableObject();
 };
 //handles groups of expendable objects
 
@@ -27,6 +28,7 @@ protected:
 public:
     //depends on OpenGL being already initialized
     ExpendableObjectHandler(const float vertices[], size_t size_verts, ShaderProg& prog); //: vertices{verts}, num_vertices{size_verts}
+    ExpendableObjectHandler();
     std::vector<glm::vec3> update(float dt); //returns coords and angle to 
     void draw() const;
     void prune(); //removes inactive objects
@@ -40,6 +42,7 @@ class PlayerHandler {
     Renderer renderer;
 public:
     PlayerHandler(ShaderProg& prog);
+    PlayerHandler();
     bool update(bool* input, float dt);
     void draw() const;
     void prune();
@@ -50,6 +53,7 @@ public:
 class PlayerBulletHandler : public ExpendableObjectHandler {
 public:
     PlayerBulletHandler(ShaderProg & prog);
+    PlayerBulletHandler();
     void spawn(const glm::vec3& coord);
 };
 #endif
