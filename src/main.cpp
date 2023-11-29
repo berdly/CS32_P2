@@ -1,7 +1,7 @@
 //class to handle dynamic shader loading
 #include "../src/lib/shaderprog.h"
 //class which represents game objects
-#include "../lib/entity.h"
+#include "..src/lib/entity.h"
 //class which handles rendering of entities
 #include "../src/lib/renderer.h"
 #include "../src/lib/handler.h"
