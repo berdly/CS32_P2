@@ -56,17 +56,19 @@ public:
         wasdj = inputs;
     }
     bool update(float dt) override {
-        if(wasdj[0]){
-            speed += dt/1000.0f;
-        }
-        if(wasdj[1]){
-            angle -= dt*3;
-        }
-        if(wasdj[2]){
-            speed -= dt/1000.0f;;
-        }
-        if(wasdj[3]){
-             angle += dt*3;
+        if(wasdj){
+            if(wasdj[0]){
+                speed += dt/1000.0f;
+            }
+            if(wasdj[1]){
+                angle -= dt*3;
+            }
+            if(wasdj[2]){
+                speed -= dt/1000.0f;;
+            }
+            if(wasdj[3]){
+                angle += dt*3;
+            }
         }
         //speed = std::clamp(speed, 0.0f, 1.0f);
 

@@ -73,6 +73,9 @@ ExpendableObjectHandler::ExpendableObjectHandler(const float verts[], size_t siz
 std::vector<glm::vec3> ExpendableObjectHandler::update(float dt){
     std::vector<glm::vec3> spawn_points;
     for(auto& obj : entities){
+        if(!obj.pos){
+            obj.active = false;
+        }
         if(obj.active && obj.pos->update(dt)){
             spawn_points.emplace_back(obj.pos->get_pos(), obj.pos->rotation());
         }
