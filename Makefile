@@ -10,11 +10,5 @@ game.o: src/main.cpp
 handler.o: src/lib/handler.cpp
 	${CXX} $(CXXFLAGS)  $^ -c -o $@ -lGL -lglut
 
-renderer.o: src/lib/renderer.cpp
-	${CXX} $(CXXFLAGS)  $^ -c -o $@ -lGL-lglut
-
-shaderprog.o: src/lib/shaderprog.cpp
-	${CXX} $(CXXFLAGS)  $^ -c -o $@ -lGL -lglut
-
 clean:
 	rm -f *.o game
