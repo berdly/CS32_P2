@@ -1,3 +1,13 @@
+#include <iostream>
+#include <vector>
+#include <utility>
+
+#ifdef _DEBUG
+#  define DBG(x) do { std::cerr << x << '\n'; } while (false)
+#else
+#  define DBG(x) do {} while (false)
+#endif
+
 //class to handle dynamic shader loading
 #include "../src/lib/shaderprog.h"
 //class which represents game objects
@@ -10,9 +20,6 @@
 //window and input handling
 #include <GLFW/glfw3.h>
 // Standard Headers
-#include <iostream>
-#include <vector>
-#include <utility>
 
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -68,7 +75,8 @@ int main(int argc, char * argv[]) {
     
     ShaderProg shaderProg{ "./shaders/vertex.vert", "./shaders/fragment.frag" };
     shaderProg.use();
-    
+    DBG("test");
+    DBG(mwindow);
     PlayerHandler player{shaderProg};
     PlayerBulletHandler bullets{shaderProg};
 
