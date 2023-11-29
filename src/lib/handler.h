@@ -41,7 +41,7 @@ class PlayerHandler {
     Renderer renderer;
 public:
     PlayerHandler(ShaderProg& prog);
-    bool update(float* input, float dt);
+    bool update(bool* input, float dt);
     void draw() const;
     void prune();
     bool checkCollisions(const ExpendableObjectHandler&);
