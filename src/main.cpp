@@ -8,7 +8,7 @@
 //OpenGL function loading
 //window and input handling
 #include <GL/glew.h>
-#include <GL/glut.h> //i think it goes like this
+#include <GL/freeglut.h> //i think it goes like this
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -159,7 +159,7 @@ void display()
     player.draw();
     bullets.draw();
 
-    glutSwapBuffers(window);
+    glutSwapBuffers();
 }
 
 void init(){
@@ -229,7 +229,7 @@ int main(int argc, char **argv)
     glutInitContextVersion( 3, 3 );
     glutInitContextProfile( GLUT_CORE_PROFILE );
     
-    glutInitDisplayMode(GLUT_DOUBLE, GLUT_RGB);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(width, height);
 
     // Create  window main
