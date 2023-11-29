@@ -91,11 +91,14 @@ int main(int argc, char * argv[]) {
     shaderProg.use();
     DBG("test");
     DBG(mwindow);
+    
     PlayerHandler player{shaderProg};
     PlayerBulletHandler bullets{shaderProg};
 
     float last = glfwGetTime();
     RNG rng{std::random_device{}()}; //seeds rng
+    int num{gen_range<0,100>(rng)};
+    DBG(num);
 
     while (!glfwWindowShouldClose(mwindow)) {
         float now = glfwGetTime();
