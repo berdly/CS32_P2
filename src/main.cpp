@@ -143,6 +143,7 @@ Renderer::Renderer(const float* vertices, size_t size, const ShaderProg& prog) :
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
+    
 }
 void Renderer::draw(const Entity& sprite) const{
     //creates transformation matrix then sends it as a uniform to the vertex shader, then draws
@@ -168,13 +169,13 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);
     player.draw();
     bullets.draw();
-
+    std::cout << "displaying";
     glutSwapBuffers();
 }
 
 void init(){
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    
+    std::cout << "initing";
     glEnable(GL_CULL_FACE); // cull face
     glCullFace(GL_BACK); // cull back face
     glFrontFace(GL_CW);
@@ -195,15 +196,18 @@ void idle(){
     }
     bullets.update(dt);
     glutPostRedisplay();
+    std::cout << "idling";
 }
 void reshape (int w, int h)
 {
     glViewport(0,0,(GLsizei)w,(GLsizei)h);
     glutPostRedisplay();
+    std::cout << "reshaping";
 }
 
 void keyboard_func(unsigned char key, int x, int y) 
 {
+    std::cout << "input";
      switch (key) 
     {    
        case 'w' : wasdj[0] = true;   break;
@@ -218,6 +222,7 @@ void keyboard_func(unsigned char key, int x, int y)
 
 void keyboard_up_func(unsigned char key, int x, int y) 
 {
+    std::cout << "input up";
      switch (key) 
     {    
        case 'w' : wasdj[0] = false;   break;
