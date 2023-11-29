@@ -13,7 +13,7 @@ ShaderProg::ShaderProg(const std::string& vSource, const std::string& fSource) {
 		vStr = vBuf.str();
 		fStr = fBuf.str();
 	}
-	catch (std::ifstream::failure) {
+	catch (const std::ifstream::failure&) {
 		std::cout << "ShaderProg file read error!\n";
 	}
 	const char* vCode{ vStr.c_str() };

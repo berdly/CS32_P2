@@ -26,6 +26,7 @@ protected:
 public:
     Entity(const glm::vec2& pos, const glm::vec2& dim, float mag, float rot) : position{pos}, size{dim}, speed{mag}, angle{rot} {}
     Entity(const glm::vec2& pos, const glm::vec2& dim) : Entity { pos, dim, 0.0f, 0.0f } {}
+    Entity() : position{}, size{}, speed{}, angle{} {}
     //true indicates some change in state we'd like to check, such as if the player shoots a bullet
     virtual bool update(float dt) = 0;
     float rotation() const { return angle; }
@@ -50,6 +51,7 @@ class PlayerPos : public Entity {
     float cooldown;
 public:
     PlayerPos(const glm::vec2 pos) : Entity{ pos, glm::vec2{0.05f, 0.1f } }, wasdj{}, cooldown{0.0f} {}
+    PlayerPos() : Entity{}, wasdj{nullptr}, cooldown{} {}
     void process_input(bool* inputs){
         wasdj = inputs;
     }
@@ -87,6 +89,7 @@ public:
 class PlayerBullet : public Entity {
 public:
     PlayerBullet(const glm::vec2& pos, float rot) : Entity{ pos, glm::vec2{0.05f, 0.05f}, 1.5f, rot } {}//std::cout << "Bullet spawned at (" << this->x_pos() << ", " << this->y_pos() << ")\n"; }
+    PlayerBullet() : Entity{} {}
     bool update(float dt) override {
         position -= dt * speed * glm::vec2{ 4.0f * glm::sin(angle)/3.0f, -glm::cos(angle) };
         return false;

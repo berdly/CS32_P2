@@ -16,6 +16,13 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+ShaderProg::ShaderProg(): id{} {}
+Renderer::Renderer() : VAO{}, transform_addr{}, shader{} {}
+PlayerHandler::PlayerHandler() : player{}, health{}, renderer{}
+
+ExpendableObject::ExpendableObject() : active{}, pos{nullptr} {}
+ExpendableObjectHandler::ExpendableObjectHandler() : renderer{}, cleanup{}, entities{} {}
+PlayerBulletHandler::PlayerBulletHandler() : ExpendableObjectHandler{} {}
 
 ShaderProg::ShaderProg(const std::string& vSource, const std::string& fSource) {
 	std::string vStr, fStr;
@@ -31,7 +38,7 @@ ShaderProg::ShaderProg(const std::string& vSource, const std::string& fSource) {
 		vStr = vBuf.str();
 		fStr = fBuf.str();
 	}
-	catch (std::ifstream::failure) {
+	catch (const std::ifstream::failure&) {
 		std::cout << "ShaderProg file read error!\n";
 	}
 	const char* vCode{ vStr.c_str() };
@@ -145,13 +152,6 @@ void Renderer::draw(const Entity* sprite) const{
         throw std::runtime_error("Attempted to draw nullptr >:(");
     }
 }
-int last;
-PlayerHandler player;
-PlayerBulletHandler bullets;
-ShaderProg shaderProg;
-bool wasdj[5];
-
-int window2 = 0, window = 0, width = 400, height = 400;
 
 void display()
 {
@@ -178,7 +178,7 @@ void init(){
 }
 
 void idle(){
-    int now = glutGet(GLUT_ELAPSE_TIME);
+    int now = glutGet(GLUT_ELAPSED_TIME);
     float dt = (last - now) / 1000.0f;
     last = now;
     if(player.update(wasdj, dt)){
@@ -221,6 +221,14 @@ void keyboard_up_func(unsigned char key, int x, int y)
     }
 
 }
+
+int last;
+PlayerHandler player;
+PlayerBulletHandler bullets;
+ShaderProg shaderProg;
+bool wasdj[5];
+
+int window2 = 0, window = 0, width = 400, height = 400;
 
 int main(int argc, char **argv)
 {
