@@ -24,7 +24,7 @@ void Renderer::draw(const Entity& sprite) const{
     
     transform = glm::rotate(transform, sprite.rotation(), glm::vec3(0.0f, 0.0f, 1.0f));
     
-    shader.setMatrix(transform_addr, glm::value_ptr(transform));
+    shader.setMatrix(shader.get_uniform_addr("transform"), glm::value_ptr(transform));
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }

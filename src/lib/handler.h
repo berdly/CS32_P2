@@ -7,6 +7,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <memory>
+#include <vector>
 
 //For enemies and bullets,
 //many objects with same shape, move in same way
@@ -36,11 +37,13 @@ public:
 };
 
 class PlayerHandler {
+    public:
     static constexpr float vertices[] = {
             -0.025f, -0.05f, 0.0f,
             0.0f, 0.05f, 0.0f,
             0.025f, -0.05f, 0.0f
     };
+    private:
     PlayerPos player;
     unsigned health;
     Renderer renderer;
@@ -50,7 +53,7 @@ public:
     void draw() const;
     void prune();
     bool checkCollisions(const ExpendableObjectHandler&);
-    const glm::vec3& get_coord();
+    glm::vec3 get_coord();
 };
 
 class PlayerBulletHandler : public ExpendableObjectHandler {

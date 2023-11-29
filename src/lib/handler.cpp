@@ -35,7 +35,7 @@ bool PlayerHandler::checkCollisions(const ExpendableObjectHandler& handler) {
     }
     return false;
 }
-const glm::vec3& PlayerHandler::get_coord(){
+glm::vec3 PlayerHandler::get_coord(){
     return glm::vec3(player.get_pos(), player.rotation());
 }
 /*
@@ -57,7 +57,7 @@ bool out_bounds(const glm::vec2& pos){
     return ((pos.x)*(pos.x) > 1.0f) || ((pos.y)*(pos.y) > 1.0f);
 }
 ExpendableObjectHandler::ExpendableObjectHandler(const float verts[], size_t size_verts, ShaderProg& prog)
-    : entities{}, cleanup{0.0f}, renderer{verts, size_verts, prog}{}
+    : renderer{verts, size_verts, prog}, cleanup{}, entities{} {}
 std::vector<glm::vec3> ExpendableObjectHandler::update(float dt){
     std::vector<glm::vec3> spawn_points;
     for(auto& obj : entities){

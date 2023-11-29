@@ -17,3 +17,5 @@ Debug/
 .vs/
 .vscode/
 *.user
+*.o
+game
