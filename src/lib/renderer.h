@@ -2,7 +2,7 @@
 #define RENDERER_H
 #include "shaderprog.h"
 #include "entity.h"
-
+#include <glm/glm.hpp>
 /*
 This class handles drawing a vertex buffer. Vertex buffers send sets of points to the GPU
 which represent the vertices of the shapes we are drawing. This means we should instantiate 
@@ -13,9 +13,11 @@ the screen to draw each vertex allowing for the same shape to be drawn many time
 class Renderer {
     unsigned VAO;
     unsigned transform_addr;
+    unsigned color_addr;
+    glm::vec3 color;
     ShaderProg& shader;
 public:
-    Renderer(const float* vertices, size_t size, ShaderProg& shader);
+    Renderer(const float* vertices, size_t size, const glm::vec3& color, ShaderProg& shader);
     void draw(const Entity& sprite) const;
     void draw(const Entity* sprite_ptr) const;
 };

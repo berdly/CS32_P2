@@ -84,9 +84,16 @@ void ShaderProg::setFloat(unsigned addr, float data) {
 	glUniform1f(addr, data);
 }
 
-void ShaderProg::setMatrix(const std::string& unif, float* data) {
+void ShaderProg::setMatrix(const std::string& unif, const float* data) {
 	glUniformMatrix4fv(this->get_uniform_addr(unif), 1, GL_FALSE, data);
 }
-void ShaderProg::setMatrix(unsigned addr, float* data) {
+void ShaderProg::setMatrix(unsigned addr, const float* data) {
 	glUniformMatrix4fv(addr, 1, GL_FALSE, data);
+}
+
+void ShaderProg::setVec(const std::string& unif, const float* data) {
+	glUniform3fv(this->get_uniform_addr(unif), 1, data);
+}
+void ShaderProg::setVec(unsigned addr, const float* data) {
+	glUniform3fv(addr, 1, data);
 }

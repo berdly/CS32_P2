@@ -18,7 +18,7 @@ class PlayerHandler {
     void checkCollisions(const ExpendableObjectHandler&);
 };
 */
-PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 3 }, renderer{ vertices, sizeof(vertices), prog } {}
+PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 3 }, renderer{ vertices, sizeof(vertices), objColor, prog } {}
 bool PlayerHandler::update(GLFWwindow* window, float dt) {
     this->player.process_input(window);
     return this->player.update(dt);
@@ -56,8 +56,8 @@ public:
 bool out_bounds(const glm::vec2& pos){
     return ((pos.x)*(pos.x) > 1.0f) || ((pos.y)*(pos.y) > 1.0f);
 }
-ExpendableObjectHandler::ExpendableObjectHandler(const float verts[], size_t size_verts, ShaderProg& prog)
-    : renderer{verts, size_verts, prog}, cleanup{}, entities{} {}
+ExpendableObjectHandler::ExpendableObjectHandler(const float verts[], size_t size_verts, const glm::vec3& color, ShaderProg& prog)
+    : renderer{verts, size_verts, color, prog}, cleanup{}, entities{} {}
 std::vector<glm::vec3> ExpendableObjectHandler::update(float dt){
     std::vector<glm::vec3> spawn_points;
     for(auto& obj : entities){
@@ -89,7 +89,7 @@ void ExpendableObjectHandler::prune(){
 }
 const std::vector<ExpendableObject>& ExpendableObjectHandler::get_objects() const { return entities; }
 
-PlayerBulletHandler::PlayerBulletHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), prog} {}
+PlayerBulletHandler::PlayerBulletHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog} {}
 
 void PlayerBulletHandler::spawn(const glm::vec3& coord) {
     this->entities.emplace_back(true, new PlayerBullet{ glm::vec2{coord.x, coord.y}, coord.z });

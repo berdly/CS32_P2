@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 //s
-Renderer::Renderer(const float* vertices, size_t size, ShaderProg& prog) : VAO{}, transform_addr{ prog.get_uniform_addr("transform") }, shader{ prog } {
+Renderer::Renderer(const float* vertices, size_t size, const glm::vec3& objColor, ShaderProg& prog) : VAO{}, transform_addr{ prog.get_uniform_addr("transform") }, color_addr{ prog.get_uniform_addr("objColor") }, color{objColor}, shader{ prog } {
     //creates a VBO and saves the interpretation info in a VAO for later use
     unsigned VBO;
     glGenBuffers(1, &VBO);
@@ -23,8 +23,8 @@ void Renderer::draw(const Entity& sprite) const{
     //glm::vec3 rot_axis{ glm::normalize(glm::vec3(sprite.x_pos() + (sprite.length() / 2.0f), (sprite.y_pos() - (sprite.height()/2.0f)), 1.0f)) };
     
     transform = glm::rotate(transform, sprite.rotation(), glm::vec3(0.0f, 0.0f, 1.0f));
-    
-    shader.setMatrix(shader.get_uniform_addr("transform"), glm::value_ptr(transform));
+    shader.setVec(color_addr, glm::value_ptr(color));
+    shader.setMatrix(transform_addr, glm::value_ptr(transform));
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }

@@ -28,7 +28,7 @@ protected:
     std::vector<ExpendableObject> entities;
 public:
     //depends on OpenGL being already initialized
-    ExpendableObjectHandler(const float vertices[], size_t size_verts, ShaderProg& prog); //: vertices{verts}, num_vertices{size_verts}
+    ExpendableObjectHandler(const float vertices[], size_t size_verts, const glm::vec3& color, ShaderProg& prog); //: vertices{verts}, num_vertices{size_verts}
     std::vector<glm::vec3> update(float dt); //returns coords and angle to 
     void draw() const;
     void prune(); //removes inactive objects
@@ -43,6 +43,7 @@ class PlayerHandler {
             0.0f, 0.05f, 0.0f,
             0.025f, -0.05f, 0.0f
     };
+    static constexpr glm::vec3 objColor{0.5, 0.5, 0.25};
     private:
     PlayerPos player;
     unsigned health;
@@ -63,6 +64,7 @@ class PlayerBulletHandler : public ExpendableObjectHandler {
         0.0125f, 0.0125f, 0.0f,
         0.0125f, -0.0125f, 0.0f,
     };
+    static constexpr glm::vec3 objColor{0.5, 0.5, 0.0};
 public:
     PlayerBulletHandler(ShaderProg & prog);
     void spawn(const glm::vec3& coord);

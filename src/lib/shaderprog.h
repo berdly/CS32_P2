@@ -34,8 +34,11 @@ public:
 	void setFloat(const std::string&, float);
 	void setFloat(unsigned, float);
 
-	void setMatrix(const std::string&, float*);
-	void setMatrix(unsigned, float*);
+	void setMatrix(const std::string&, const float*);
+	void setMatrix(unsigned, const float*);
+
+	void setVec(const std::string&, const float*);
+	void setVec(unsigned, const float*);
 	/*
 	template<typename T>
 	void setArr(const std::string&, T*);
