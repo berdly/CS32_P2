@@ -7,7 +7,7 @@
 #include "../src/lib/handler.h"
 //OpenGL function loading
 //window and input handling
-#include <gl.h>
+#include <glad.h>
 #include <GL/glut.h> //i think it goes like this
 #include <stdlib.h>
 #include <stdio.h>
