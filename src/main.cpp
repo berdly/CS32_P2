@@ -241,7 +241,6 @@ int main(int argc, char **argv)
     
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(width, height);
-    glewInit();
     // Create  window main
     window = glutCreateWindow("Window 1");
     glutDisplayFunc(display);
@@ -250,7 +249,7 @@ int main(int argc, char **argv)
     glutKeyboardUpFunc(keyboard_up_func);
     glutReshapeFunc(reshape);
     glutInitWindowPosition(100,100);
-
+    glewInit();
 
     // Enter Glut Main Loop and wait for events
     glutMainLoop();
