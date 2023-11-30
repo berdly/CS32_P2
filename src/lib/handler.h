@@ -69,6 +69,22 @@ public:
     PlayerBulletHandler(ShaderProg & prog);
     void spawn(const glm::vec3& coord);
 };
+
+class EnemyHandler : public ExpendableObjectHandler {
+
+    static constexpr float vertices[] = {
+            -0.025f, -0.05f, 0.0f,
+            0.0f, 0.05f, 0.0f,
+            0.025f, -0.05f, 0.0f
+    };
+
+    static constexpr glm::vec3 objColor{1.0f, 0.0f, 0.0f};
+
+    public:
+        EnemyHandler(ShaderProg & prog);
+        void spawn(const glm::vec3& coord);
+};
+
 #endif
 
 

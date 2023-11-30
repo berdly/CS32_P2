@@ -93,23 +93,33 @@ int main(int argc, char * argv[]) {
     DBG(mwindow);
     PlayerHandler player{shaderProg};
     PlayerBulletHandler bullets{shaderProg};
+    EnemyHandler enemy{shaderProg};
 
     float last = glfwGetTime();
     RNG rng{std::random_device{}()}; //seeds rng
+    int i = 0;
 
     while (!glfwWindowShouldClose(mwindow)) {
         float now = glfwGetTime();
         float dt{now - last};
         last = now;
 
+        
+        if(i < 1){
+            enemy.spawn(glm::vec3{.5, 0, 0});
+            i++;
+        }
+
         processInput(mwindow);
         if(player.update(mwindow, dt)){
             bullets.spawn(player.get_coord());
         }
         bullets.update(dt);
+        enemy.update(dt);
         glClear(GL_COLOR_BUFFER_BIT);
         player.draw();
         bullets.draw();
+        enemy.draw();
 
         glfwSwapBuffers(mwindow);
         glfwPollEvents();

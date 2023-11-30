@@ -101,4 +101,23 @@ public:
         return false;
     }
 };
+
+class Enemy : public Entity {
+
+public: 
+    Enemy(const glm::vec2& pos) : Entity{ pos, glm::vec2{0.05f, 0.1f }} {}
+
+    bool update(float dt)  override {
+        float dx = .1;
+        if(position.x <= -1 || position.x >= 1){
+            dx*= -1;
+        }
+        position.x -= dx;
+        position.x = std::clamp(position.x, -1.0f, 1.0f);
+        position.y = std::clamp(position.y, -1.0f, 1.0f);
+        return false;
+    }
+    
+};
+
 #endif

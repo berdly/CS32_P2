@@ -58,6 +58,8 @@ bool out_bounds(const glm::vec2& pos){
 }
 ExpendableObjectHandler::ExpendableObjectHandler(const float verts[], size_t size_verts, const glm::vec3& color, ShaderProg& prog)
     : renderer{verts, size_verts, color, prog}, cleanup{}, entities{} {}
+
+
 std::vector<glm::vec3> ExpendableObjectHandler::update(float dt){
     std::vector<glm::vec3> spawn_points;
     for(auto& obj : entities){
@@ -93,4 +95,11 @@ PlayerBulletHandler::PlayerBulletHandler(ShaderProg& prog) : ExpendableObjectHan
 
 void PlayerBulletHandler::spawn(const glm::vec3& coord) {
     this->entities.emplace_back(true, new PlayerBullet{ glm::vec2{coord.x, coord.y}, coord.z });
+}
+
+
+EnemyHandler::EnemyHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog} {}
+
+void EnemyHandler::spawn(const glm::vec3& coord) {
+    this->entities.emplace_back(true, new Enemy{ glm::vec2{0, 0.5}});//add random coords at top of screen
 }
