@@ -94,7 +94,9 @@ int main(int argc, char * argv[]) {
     
     PlayerHandler player{shaderProg};
     PlayerBulletHandler bullets{shaderProg};
+
     EnemyHandler enemy{shaderProg};
+    EnemyBulletHandler enemyBullets{shaderProg};
 
     float last = glfwGetTime();
     RNG rng{std::random_device{}()}; //seeds rng
@@ -109,20 +111,35 @@ int main(int argc, char * argv[]) {
 
         
         if(i < 1){
-            enemy.spawn(glm::vec3{.25, 0, 0});
+            enemy.spawn(glm::vec3{.25, .75, 0});
+            enemy.spawn(glm::vec3{0, .5, 0});
+            enemy.spawn(glm::vec3{-.25, .25, 0});
             i++;
         }
 
         processInput(mwindow);
-        if(player.update(mwindow, dt)){
+        if(player.update(mwindow, dt) && player.get_active()){
             bullets.spawn(player.get_coord());
         }
+        for(size_t i = 0; i < enemy.get_objects().size();i++){
+            enemyBullets.spawn(glm::vec3(enemy.get_objects().at(i).pos->get_pos(), enemy.get_objects().at(i).pos->rotation()+ glm::radians(180.0f)),dt);
+        }
+        
         bullets.update(dt);
+        enemyBullets.update(dt);
         enemy.update(dt);
+        enemy.checkCollisions(bullets);
+        player.checkCollisions(enemyBullets);
+
         glClear(GL_COLOR_BUFFER_BIT);
-        player.draw();
-        bullets.draw();
+        
+            player.draw();
+            bullets.draw();
+        
+       
+        
         enemy.draw();
+        enemyBullets.draw();
 
         glfwSwapBuffers(mwindow);
         glfwPollEvents();

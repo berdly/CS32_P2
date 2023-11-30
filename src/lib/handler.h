@@ -15,9 +15,10 @@
 
 struct ExpendableObject {
     bool active;
+    float health; //for enemies
     //must use the Entity interface
     std::unique_ptr<Entity> pos;
-    ExpendableObject(bool state, Entity* type) : active{ state }, pos{ type } {};
+    ExpendableObject(bool state, Entity* type) : active{ state }, pos{ type }, health{3.0f} {};
 };
 //handles groups of expendable objects
 
@@ -47,6 +48,7 @@ class PlayerHandler {
     private:
     PlayerPos player;
     unsigned health;
+    bool active;
     Renderer renderer;
 public:
     PlayerHandler(ShaderProg& prog);
@@ -54,6 +56,7 @@ public:
     void draw() const;
     void prune();
     bool checkCollisions(const ExpendableObjectHandler&);
+    bool get_active(){return active;}
     glm::vec3 get_coord();
 };
 
@@ -73,9 +76,9 @@ public:
 class EnemyHandler : public ExpendableObjectHandler {
 
     static constexpr float vertices[] = {
-            -0.025f, -0.05f, 0.0f,
-            0.0f, 0.05f, 0.0f,
-            0.025f, -0.05f, 0.0f
+            -0.025f, 0.05f, 0.0f,
+            0.025f, 0.05f, 0.0f,
+            0.0f, -0.05f, 0.0f,
     };
 
     static constexpr glm::vec3 objColor{1.0f, 0.0f, 0.0f};
@@ -83,6 +86,24 @@ class EnemyHandler : public ExpendableObjectHandler {
     public:
         EnemyHandler(ShaderProg & prog);
         void spawn(const glm::vec3& coord);
+        bool checkCollisions(const ExpendableObjectHandler& handler);
+
+};
+
+class EnemyBulletHandler : public ExpendableObjectHandler {
+    static constexpr float vertices[] = {
+        -0.0125f, -0.0125f, 0.0f,
+        -0.0125f, 0.0125f, 0.0f,
+        0.0125f, 0.0125f, 0.0f,
+        0.0125f, -0.0125f, 0.0f,
+    };
+    static constexpr glm::vec3 objColor{1.0f, 0.0f, 0.0f};
+public:
+
+    EnemyBulletHandler(ShaderProg & prog);
+    void spawn(const glm::vec3& coord,float dt);
+private:
+    float timeAccum;
 };
 
 #endif

@@ -18,18 +18,26 @@ class PlayerHandler {
     void checkCollisions(const ExpendableObjectHandler&);
 };
 */
-PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 3 }, renderer{ vertices, sizeof(vertices), objColor, prog } {}
+PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 10}, active{true},renderer{ vertices, sizeof(vertices),objColor, prog } {}
 bool PlayerHandler::update(GLFWwindow* window, float dt) {
     this->player.process_input(window);
     return this->player.update(dt);
 }
 void PlayerHandler::draw() const{
+    if(this->active){
     this->renderer.draw(player);
+    }
 }
+
 bool PlayerHandler::checkCollisions(const ExpendableObjectHandler& handler) {
+    if(health == 0){
+        this->active = false;
+        return true;
+    }
     for(const auto& obj : handler.get_objects()){
         if(obj.pos->in(this->player.get_pos())){
             this->health--;
+            
             return health == 0;
         }
     }
@@ -101,5 +109,34 @@ void PlayerBulletHandler::spawn(const glm::vec3& coord) {
 EnemyHandler::EnemyHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog} {}
 
 void EnemyHandler::spawn(const glm::vec3& coord) {
-    this->entities.emplace_back(true, new Enemy{ glm::vec2{0, 0.5}});//add random coords at top of screen
+    this->entities.emplace_back(true, new Enemy{ glm::vec2{coord.x, coord.y}});//add random coords at top of screen
 }
+
+
+bool EnemyHandler::checkCollisions(const ExpendableObjectHandler& handler) {
+
+    for( ExpendableObject& enem: this->entities){
+
+    for(const ExpendableObject& obj : handler.get_objects()){
+        if(obj.pos->in(enem.pos->get_pos())){
+            enem.health--;
+            if(enem.health == 0){
+                enem.active = false;
+            }
+        }
+    }
+
+    }
+    return false;
+}
+
+EnemyBulletHandler::EnemyBulletHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog}, timeAccum{0.0f}{}
+
+void EnemyBulletHandler::spawn(const glm::vec3& coord, float dt) {
+    timeAccum+=dt;
+    if(timeAccum > 1.0f){
+    timeAccum = 0;
+    this->entities.emplace_back(true, new EnemyBullet{ glm::vec2{coord.x, coord.y}, coord.z });
+    }
+}
+

@@ -66,13 +66,13 @@ public:
             speed += dt/100.0f;
         }
         if(wasdj[1]){
-            angle -= dt*3;
+            angle += dt*3;
         }
         if(wasdj[2]){
             speed -= dt/50.0f;;
         }
         if(wasdj[3]){
-             angle += dt*3;
+             angle -= dt*3;
         }
         speed = std::clamp(speed, 0.0f, 1.0f);
 
@@ -105,9 +105,20 @@ public:
     }
 };
 
+class EnemyBullet : public Entity {
+public:
+    EnemyBullet(const glm::vec2& pos, float rot) : Entity{ pos, glm::vec2{0.05f, 0.05f}, 1.5f, rot } {}//std::cout << "Bullet spawned at (" << this->x_pos() << ", " << this->y_pos() << ")\n"; }
+    bool update(float dt) override {
+        position -= dt * speed * glm::vec2{ 4.0f * glm::sin(angle)/3.0f, -glm::cos(angle) };
+        return false;
+    }
+};
+
 class Enemy : public Entity {
 
 public: 
+    
+
     Enemy(const glm::vec2& pos) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}{}
 
     bool update(float dt)  override {
