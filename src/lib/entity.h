@@ -18,6 +18,9 @@ Angle determines the orientation with respect to the x-axis in radians.
 #include <algorithm>
 #include <stdexcept>
 
+
+
+
 class Entity {
 protected:
     glm::vec2 position;
@@ -105,19 +108,23 @@ public:
 class Enemy : public Entity {
 
 public: 
-    Enemy(const glm::vec2& pos) : Entity{ pos, glm::vec2{0.05f, 0.1f }} {}
+    Enemy(const glm::vec2& pos) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}{}
 
     bool update(float dt)  override {
-        float dx = .1;
+        
+        
+        position.x -= xChange;
+
         if(position.x <= -1 || position.x >= 1){
-            dx*= -1;
+            xChange*= -1;
         }
-        position.x -= dx;
+        
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
         return false;
     }
-    
+private:
+    float xChange;
 };
 
 #endif

@@ -109,7 +109,7 @@ int main(int argc, char * argv[]) {
 
         
         if(i < 1){
-            enemy.spawn(glm::vec3{.5, 0, 0});
+            enemy.spawn(glm::vec3{.25, 0, 0});
             i++;
         }
 
