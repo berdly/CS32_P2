@@ -18,7 +18,7 @@ class PlayerHandler {
     void checkCollisions(const ExpendableObjectHandler&);
 };
 */
-PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, 0.0f} }, health{ 10}, active{true},renderer{ vertices, sizeof(vertices),objColor, prog } {}
+PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, -0.5f} }, health{ 10}, active{true},renderer{ vertices, sizeof(vertices),objColor, prog } {}
 bool PlayerHandler::update(GLFWwindow* window, float dt) {
     this->player.process_input(window);
     return this->player.update(dt);
@@ -86,6 +86,9 @@ std::vector<glm::vec3> ExpendableObjectHandler::update(float dt){
     return spawn_points;
 }
 
+
+
+
 void ExpendableObjectHandler::draw() const{
     for(const auto& obj : entities){
         if(obj.active){
@@ -107,10 +110,16 @@ void PlayerBulletHandler::spawn(const glm::vec3& coord) {
 
 
 EnemyHandler::EnemyHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog} {}
+ChaserEnemyHandler::ChaserEnemyHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog} {}
 
 void EnemyHandler::spawn(const glm::vec3& coord) {
     this->entities.emplace_back(true, new Enemy{ glm::vec2{coord.x, coord.y}});//add random coords at top of screen
 }
+
+void ChaserEnemyHandler::spawn(const glm::vec3& coord, float * pl) {
+    this->entities.emplace_back(true, new ChaserEnemy{glm::vec2{coord.x, coord.y}, pl});//add random coords at top of screen
+}
+
 
 
 bool EnemyHandler::checkCollisions(const ExpendableObjectHandler& handler) {

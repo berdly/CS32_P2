@@ -17,17 +17,22 @@ struct ExpendableObject {
     bool active;
     float health; //for enemies
     //must use the Entity interface
+    //glm::vec2 pl; //player location
+
     std::unique_ptr<Entity> pos;
     ExpendableObject(bool state, Entity* type) : active{ state }, pos{ type }, health{3.0f} {};
+   
 };
 //handles groups of expendable objects
 
 class ExpendableObjectHandler {
     Renderer renderer;
-    float cleanup;
+    
 protected:
     std::vector<ExpendableObject> entities;
+    float cleanup;
 public:
+    
     //depends on OpenGL being already initialized
     ExpendableObjectHandler(const float vertices[], size_t size_verts, const glm::vec3& color, ShaderProg& prog); //: vertices{verts}, num_vertices{size_verts}
     std::vector<glm::vec3> update(float dt); //returns coords and angle to 
@@ -89,6 +94,21 @@ class EnemyHandler : public ExpendableObjectHandler {
         bool checkCollisions(const ExpendableObjectHandler& handler);
 
 };
+
+class ChaserEnemyHandler : public ExpendableObjectHandler {
+
+    static constexpr float vertices[] = {
+            -0.0125f, 0.05f, 0.0f,
+            0.0125f, 0.05f, 0.0f,
+            0.0f, -0.05f, 0.0f,
+    };
+    static constexpr glm::vec3 objColor{0.0f, 1.0f, 0.0f};
+    public:
+    ChaserEnemyHandler(ShaderProg & prog);
+    void spawn(const glm::vec3& coord, float * pl);
+    
+};
+
 
 class EnemyBulletHandler : public ExpendableObjectHandler {
     static constexpr float vertices[] = {

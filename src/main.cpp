@@ -60,6 +60,8 @@ void processInput(GLFWwindow* window) {
     }
 }
 
+
+
 int main(int argc, char * argv[]) {
 
     glfwInit();
@@ -96,21 +98,30 @@ int main(int argc, char * argv[]) {
     PlayerBulletHandler bullets{shaderProg};
 
     EnemyHandler enemy{shaderProg};
+    ChaserEnemyHandler chaser{shaderProg};
     EnemyBulletHandler enemyBullets{shaderProg};
+
 
     float last = glfwGetTime();
     RNG rng{std::random_device{}()}; //seeds rng
     int num{gen_range<0,100>(rng)};
     DBG(num);
     int i = 0;
+     float playerLoc[2] = {player.get_coord().x,player.get_coord().y};
 
     while (!glfwWindowShouldClose(mwindow)) {
+        playerLoc[0] = player.get_coord().x;
+        playerLoc[1] = player.get_coord().y;
+
         float now = glfwGetTime();
         float dt{now - last};
         last = now;
 
         
         if(i < 1){
+           
+            
+            chaser.spawn(glm::vec3{0,0.9f,0}, playerLoc);
             enemy.spawn(glm::vec3{.25, .75, 0});
             enemy.spawn(glm::vec3{0, .5, 0});
             enemy.spawn(glm::vec3{-.25, .25, 0});
@@ -128,6 +139,9 @@ int main(int argc, char * argv[]) {
         bullets.update(dt);
         enemyBullets.update(dt);
         enemy.update(dt);
+        chaser.update(dt);
+
+
         enemy.checkCollisions(bullets);
         player.checkCollisions(enemyBullets);
 
@@ -137,7 +151,7 @@ int main(int argc, char * argv[]) {
             bullets.draw();
         
        
-        
+        chaser.draw();
         enemy.draw();
         enemyBullets.draw();
 

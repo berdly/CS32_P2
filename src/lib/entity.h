@@ -17,6 +17,7 @@ Angle determines the orientation with respect to the x-axis in radians.
 #include <GLFW/glfw3.h>
 #include <algorithm>
 #include <stdexcept>
+#include <iostream>
 
 
 
@@ -25,11 +26,14 @@ class Entity {
 protected:
     glm::vec2 position;
     glm::vec2 size;
+    
     float speed;
     float angle;
+    
 public:
     Entity(const glm::vec2& pos, const glm::vec2& dim, float mag, float rot) : position{pos}, size{dim}, speed{mag}, angle{rot} {}
     Entity(const glm::vec2& pos, const glm::vec2& dim) : Entity { pos, dim, 0.0f, 0.0f } {}
+    Entity(const glm::vec2& pos, const glm::vec2& dim, float dydx) : Entity { pos, dim, dydx, 0.0f } {}
     //true indicates some change in state we'd like to check, such as if the player shoots a bullet
     virtual bool update(float dt) = 0;
     float rotation() const { return angle; }
@@ -46,6 +50,7 @@ public:
         float bottom_bound{position.y - size.y};
         return (point.y < top_bound) && (point.y > bottom_bound) && (point.x > left_bound) && (point.x < right_bound);
     }
+    
 };
 
 //testing update
@@ -118,7 +123,6 @@ class Enemy : public Entity {
 
 public: 
     
-
     Enemy(const glm::vec2& pos) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}{}
 
     bool update(float dt)  override {
@@ -135,7 +139,41 @@ public:
         return false;
     }
 private:
+
     float xChange;
 };
 
+class ChaserEnemy : public Entity {
+
+public:
+    ChaserEnemy(const glm::vec2& pos,float * loc) : Entity{ pos, glm::vec2{0.025f, 0.1f },0.0025f}, pl{loc} {}
+    
+    bool update(float dt) override{//needs to somehow get player location
+
+        if(pl[1] <= position.y){ // works
+            angle =  glm::tan((pl[0] - position.x)/(position.y - pl[1])); //180 straight down
+        }else {
+            angle =  glm::tan((pl[1]- position.y)/(pl[0]-position.x)); 
+        }
+
+         position += speed * glm::vec2{2.0f*glm::sin(angle)/3.0f, -glm::cos(angle)};
+        //std::cout<<position.x <<" "<<angle<<" "<<position.y<<std::endl;
+        //position += speed * glm::vec2{2.0f*glm::sin(angle)/3.0f, -glm::cos(angle)};
+        
+
+        position.x = std::clamp(position.x, -1.0f, 1.0f);
+        position.y = std::clamp(position.y, -1.0f, 1.0f);
+
+        return false;
+        
+        
+
+    }
+    float * pl;
+
+   
+
+
+    
+};
 #endif
