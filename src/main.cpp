@@ -28,6 +28,11 @@ int gen_range(RNG& gen){
     return dist(gen);
 }
 
+glm::vec2 gen_coord(RNG& gen){
+    static std::uniform_real_distribution<float> dist{-1.0f, 1.0f};
+    return glm::vec2{dist(gen), dist(gen)};
+}
+
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
