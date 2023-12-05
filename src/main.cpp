@@ -131,7 +131,7 @@ int main(int argc, char * argv[]) {
         if(enemy.getActive() == 0){
             enemy.setLev(enemy.getLev()+1);
             for(size_t i = 0; i < enemy.getnumEn()[enemy.getLev()];i++){
-                enemy.spawn(glm::vec3(gen_coord(rng),0.0f));
+                enemy.spawn(glm::vec3(gen_coord(rng),0.0f), playerLoc);
             }
         }
             //chaser.spawn(glm::vec3{0,0.9f,0}, playerLoc);

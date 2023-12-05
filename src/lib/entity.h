@@ -123,7 +123,7 @@ class Enemy : public Entity {
 
 public: 
     
-    Enemy(const glm::vec2& pos, float br) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}, bulletRate{br}{}
+    Enemy(const glm::vec2& pos, float br, float * loc) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}, bulletRate{br}, pl{loc}{}
 
     bool update(float dt)  override {
         
@@ -138,7 +138,12 @@ public:
         
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
-        
+
+        if(pl[1] <= position.y){ // works
+            angle =  glm::tan((pl[0] - position.x)/(position.y - pl[1])); //180 straight down
+        }else {
+            angle =  glm::tan((pl[1]- position.y)/(pl[0]-position.x)); 
+        }
         if(timeAccum > bulletRate){
             timeAccum = 0;
             return true;
@@ -151,6 +156,7 @@ private:
     float xChange;
     float timeAccum;
     float bulletRate;
+    float * pl;
 
 };
 

@@ -116,8 +116,8 @@ void PlayerBulletHandler::spawn(const glm::vec3& coord) {
 EnemyHandler::EnemyHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog}, levels{lev}, numEn{enMap}, level{0} {}
 ChaserEnemyHandler::ChaserEnemyHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog} {}
 
-void EnemyHandler::spawn(const glm::vec3& coord) {
-    this->entities.emplace_back(true, new Enemy{ glm::vec2{coord.x, coord.y}, levels[level]});//add random coords at top of screen
+void EnemyHandler::spawn(const glm::vec3& coord, float * pl) {
+    this->entities.emplace_back(true, new Enemy{ glm::vec2{coord.x, coord.y}, levels[level], pl});//add random coords at top of screen
 }
 
 void ChaserEnemyHandler::spawn(const glm::vec3& coord, float * pl) {
