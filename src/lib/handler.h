@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 #include <vector>
+#include <map>
 
 //For enemies and bullets,
 //many objects with same shape, move in same way
@@ -38,7 +39,9 @@ public:
     std::vector<glm::vec3> update(float dt); //returns coords and angle to 
     void draw() const;
     void prune(); //removes inactive objects
-    //void collide(const ExpendableObjectHandler& hitboxes); //for bullets to hit enemies
+    size_t getActive(){ return entities.size();};
+   
+        //void collide(const ExpendableObjectHandler& hitboxes); //for bullets to hit enemies
     const std::vector<ExpendableObject>& get_objects() const;
 };
 
@@ -87,11 +90,27 @@ class EnemyHandler : public ExpendableObjectHandler {
     };
 
     static constexpr glm::vec3 objColor{1.0f, 0.0f, 0.0f};
-
+    const std::map<int,float> lev{{1,1.0f}, {2, 0.5f}, {3, 0.25f}}; //each level and corresponding bullet rate;
+    const std::map<int,int> enMap{{1,5}, {2, 8}, {3, 11}};
     public:
         EnemyHandler(ShaderProg & prog);
         void spawn(const glm::vec3& coord);
         bool checkCollisions(const ExpendableObjectHandler& handler);
+        std::map<int,float> getLevels(){
+            return levels;
+        }
+        std::map<int,int> getnumEn(){return numEn;};
+
+        void setLev(int l){
+            level = l;
+        }
+        int getLev(){return level;}
+    private:
+
+        int level;
+        std::map<int,float> levels;
+        std::map<int, int> numEn;
+
 
 };
 
@@ -122,8 +141,10 @@ public:
 
     EnemyBulletHandler(ShaderProg & prog);
     void spawn(const glm::vec3& coord,float dt);
+    
 private:
     float timeAccum;
+    float bulletRate;
 };
 
 #endif

@@ -19,6 +19,8 @@
 #include <glad/glad.h>
 //window and input handling
 #include <GLFW/glfw3.h>
+#include <ctime>
+#include <random>
 // Standard Headers
 typedef std::mt19937 RNG;
 //usage gen_range<-100, 100>(gen); produces random number between -100 and 100
@@ -29,8 +31,9 @@ int gen_range(RNG& gen){
 }
 
 glm::vec2 gen_coord(RNG& gen){
-    static std::uniform_real_distribution<float> dist{-1.0f, 1.0f};
-    return glm::vec2{dist(gen), dist(gen)};
+    static std::uniform_real_distribution<float> distx{-1.0f, 1.0f};
+     static std::uniform_real_distribution<float> disty{0, 1.0f};
+    return glm::vec2{distx(gen), disty(gen)};
 }
 
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -103,7 +106,7 @@ int main(int argc, char * argv[]) {
     PlayerBulletHandler bullets{shaderProg};
 
     EnemyHandler enemy{shaderProg};
-    ChaserEnemyHandler chaser{shaderProg};
+    //ChaserEnemyHandler chaser{shaderProg};
     EnemyBulletHandler enemyBullets{shaderProg};
 
 
@@ -123,28 +126,33 @@ int main(int argc, char * argv[]) {
         last = now;
 
         
-        if(i < 1){
+        
            
-            
-            chaser.spawn(glm::vec3{0,0.9f,0}, playerLoc);
-            enemy.spawn(glm::vec3{.25, .75, 0});
-            enemy.spawn(glm::vec3{0, .5, 0});
-            enemy.spawn(glm::vec3{-.25, .25, 0});
-            i++;
+        if(enemy.getActive() == 0){
+            enemy.setLev(enemy.getLev()+1);
+            for(size_t i = 0; i < enemy.getnumEn()[enemy.getLev()];i++){
+                enemy.spawn(glm::vec3(gen_coord(rng),0.0f));
+            }
         }
+            //chaser.spawn(glm::vec3{0,0.9f,0}, playerLoc);
+            
+        
 
         processInput(mwindow);
         if(player.update(mwindow, dt) && player.get_active()){
             bullets.spawn(player.get_coord());
         }
-        for(size_t i = 0; i < enemy.get_objects().size();i++){
-            enemyBullets.spawn(glm::vec3(enemy.get_objects().at(i).pos->get_pos(), enemy.get_objects().at(i).pos->rotation()+ glm::radians(180.0f)),dt);
-        }
+         
         
         bullets.update(dt);
         enemyBullets.update(dt);
-        enemy.update(dt);
-        chaser.update(dt);
+
+        std::vector<glm::vec3> sp = enemy.update(dt);
+
+        for(glm::vec3 v: sp){
+            enemyBullets.spawn(glm::vec3(v.x,v.y,v.z+glm::radians(180.0f)),dt);
+        }
+        //chaser.update(dt);
 
 
         enemy.checkCollisions(bullets);
@@ -156,7 +164,7 @@ int main(int argc, char * argv[]) {
             bullets.draw();
         
        
-        chaser.draw();
+        //chaser.draw();
         enemy.draw();
         enemyBullets.draw();
 

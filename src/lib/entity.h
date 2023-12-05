@@ -123,9 +123,11 @@ class Enemy : public Entity {
 
 public: 
     
-    Enemy(const glm::vec2& pos) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}{}
+    Enemy(const glm::vec2& pos, float br) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}, bulletRate{br}{}
 
     bool update(float dt)  override {
+        
+        timeAccum+=dt;
         
         
         position.x -= xChange;
@@ -136,17 +138,26 @@ public:
         
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
+        
+        if(timeAccum > bulletRate){
+            timeAccum = 0;
+            return true;
+        }
+
         return false;
     }
 private:
 
     float xChange;
+    float timeAccum;
+    float bulletRate;
+
 };
 
 class ChaserEnemy : public Entity {
 
 public:
-    ChaserEnemy(const glm::vec2& pos,float * loc) : Entity{ pos, glm::vec2{0.025f, 0.1f },0.0025f}, pl{loc} {}
+    ChaserEnemy(const glm::vec2& pos,float * loc) : Entity{ pos, glm::vec2{0.025f, 0.1f },0.0075f}, pl{loc} {}
     
     bool update(float dt) override{//needs to somehow get player location
 
