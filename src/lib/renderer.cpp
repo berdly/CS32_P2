@@ -35,3 +35,6 @@ void Renderer::draw(const Entity* sprite) const{
         throw std::runtime_error("Attempted to draw nullptr >:(");
     }
 }
+void Renderer::draw_at(float x, float y, unsigned verts){
+    
+}

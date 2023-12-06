@@ -19,7 +19,9 @@
 #include <glad/glad.h>
 //window and input handling
 #include <GLFW/glfw3.h>
-#include <ctime>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 #include <random>
 // Standard Headers
 typedef std::mt19937 RNG;
@@ -38,6 +40,10 @@ glm::vec2 gen_coord(RNG& gen){
 
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(height/3, 0, height, height);
+}
+
+void draw_char(char c){
+
 }
 /*
 GLFWwindow* init_window() {
@@ -115,8 +121,8 @@ int main(int argc, char * argv[]) {
     int num{gen_range<0,100>(rng)};
     DBG(num);
     int i = 0;
-     float playerLoc[2] = {player.get_coord().x,player.get_coord().y};
-
+    float playerLoc[2] = {player.get_coord().x,player.get_coord().y}; 
+    float rate_lock{}; 
     while (!glfwWindowShouldClose(mwindow)) {
         playerLoc[0] = player.get_coord().x;
         playerLoc[1] = player.get_coord().y;
@@ -124,10 +130,7 @@ int main(int argc, char * argv[]) {
         float now = glfwGetTime();
         float dt{now - last};
         last = now;
-
         
-        
-           
         if(enemy.getActive() == 0){
             enemy.setLev(enemy.getLev()+1);
             for(size_t i = 0; i < enemy.getnumEn()[enemy.getLev()];i++){
@@ -158,6 +161,11 @@ int main(int argc, char * argv[]) {
         enemy.checkCollisions(bullets);
         player.checkCollisions(enemyBullets);
 
+        if(rate_lock < 1.0f/24.0f){
+            rate_lock += dt;
+            continue;
+        }
+
         glClear(GL_COLOR_BUFFER_BIT);
         
             player.draw();
@@ -170,6 +178,7 @@ int main(int argc, char * argv[]) {
 
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
+        std::cerr << '/r' << 1.0f/dt;
     }
     glfwTerminate();
 }
