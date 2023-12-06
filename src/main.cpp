@@ -37,7 +37,7 @@ glm::vec2 gen_coord(RNG& gen){
 }
 
 void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(height/2, 0, height, height);
+    glViewport(height*2/3, 0, height, height);
 }
 /*
 GLFWwindow* init_window() {
