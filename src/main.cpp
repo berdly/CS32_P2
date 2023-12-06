@@ -132,6 +132,11 @@ int main(int argc, char * argv[]) {
         last = now;
         
         if(enemy.getActive() == 0){
+            if(enemy.getLev() == 1){
+                glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+            } else if(enemy.getLev() == 2){
+                glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+            }
             enemy.setLev(enemy.getLev()+1);
             for(size_t i = 0; i < enemy.getnumEn()[enemy.getLev()];i++){
                 enemy.spawn(glm::vec3(gen_coord(rng),0.0f), playerLoc);
