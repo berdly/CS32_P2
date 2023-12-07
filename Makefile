@@ -2,7 +2,7 @@ CXXFLAGS = -g -std=c++17 -Wall -Wextra
 CXX      = g++
 CC = gcc
 
-game: shaderprog.o renderer.o handler.o game.o textrender.o glad.o
+game: shaderprog.o renderer.o handler.o game.o textrenderer.o glad.o
 	${CXX} $(CXXFLAGS) -L./dependencies/lib -I./dependencies/headers -D_DEBUG $^ -o $@ -lGL -lglfw3 -lfreetype
 
 game.o: src/main.cpp
