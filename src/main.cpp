@@ -102,6 +102,7 @@ int main(int argc, char * argv[]) {
     float playerLoc[2] = {player.get_coord().x,player.get_coord().y}; 
     float rate_lock{}; 
     unsigned iframes{10};
+    bool won{false};
     while (!glfwWindowShouldClose(mwindow)) {
         playerLoc[0] = player.get_coord().x;
         playerLoc[1] = player.get_coord().y;
@@ -117,8 +118,14 @@ int main(int argc, char * argv[]) {
                 glClearColor(0.2f, .153f, 0.153f, 1.0f);
             }
             enemy.setLev(enemy.getLev()+1);
-            for(size_t i = 0; i < enemy.getnumEn()[enemy.getLev()];i++){
-                enemy.spawn(glm::vec3( gen_coord(rng) ,0.0f), playerLoc);
+            if(enemy.getLev() < 4){
+                for(size_t i = 0; i < enemy.getnumEn()[enemy.getLev()];i++){
+                    enemy.spawn(glm::vec3( gen_coord(rng) ,0.0f), playerLoc);
+                }
+            }
+            else{
+                enemy.deactivate();
+                won = true;
             }
         }
             //chaser.spawn(glm::vec3{0,0.9f,0}, playerLoc);
@@ -190,7 +197,9 @@ int main(int argc, char * argv[]) {
             default:
                 break;
         }
-        
+        if(won){
+            images.draw_win(0.0f, 0.0f);
+        }
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
