@@ -163,9 +163,9 @@ int main(int argc, char * argv[]) {
 
         images.use_shader();
         images.draw_win(0.0f, 0.0f);
-        images.draw_heart(0.0f, 0.9f);
-        images.draw_heart(0.1f, 0.9f);
-        images.draw_heart(0.2f, 0.9f);
+        images.draw_heart(-0.9f, 0.9f);
+        images.draw_heart(-0.8f, 0.9f);
+        images.draw_heart(-0.7f, 0.9f);
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
