@@ -103,6 +103,7 @@ int main(int argc, char * argv[]) {
     float rate_lock{}; 
     unsigned iframes{10};
     bool won{false};
+    bool lost{false};
     while (!glfwWindowShouldClose(mwindow)) {
         playerLoc[0] = player.get_coord().x;
         playerLoc[1] = player.get_coord().y;
@@ -125,7 +126,9 @@ int main(int argc, char * argv[]) {
             }
             else{
                 enemy.deactivate();
-                won = true;
+                if(!lost){
+                    won = true;
+                }
             }
         }
             //chaser.spawn(glm::vec3{0,0.9f,0}, playerLoc);
