@@ -2,17 +2,23 @@
 #ifndef TEXTRENDERER_H
 #define TEXTRENDERER_H
 #include "shaderprog.h"
-#include "entity.h"
-#include <glm/glm.hpp>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+
+#include <ft2build.h>
+#include FT_FREE_TYPE_H
+
 #include <map>
 
 typedef int Texture;
 
 class TextRenderer {
-    std::map<char, Texture> characters;
+    struct CharTexture {
+        unsigned int id;  // ID handle of the glyph texture
+        glm::ivec2   size;       // Size of glyph
+        glm::ivec2   bearing;    // Offset from baseline to left/top of glyph
+        unsigned int advance;    // Offset to advance to next glyph
+    };
+    std::map<char, CharTexture> chars;
     unsigned VAO;
     unsigned transform_addr;
     ShaderProg& text_shader;
