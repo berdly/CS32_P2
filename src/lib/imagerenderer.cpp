@@ -1,30 +1,13 @@
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include "imagerenderer.h"
 
-#include <filesystem>
-
-#include "shaderprog.h"
-namespace std::filesystem = fs;
-
-class ImageRenderer{
-    unsigned game_over_tex;
-    unsigned heart_tex;
-    unsigned win_tex;
-    unsigned VAO;
-    ShaderProg image_prog;
-    unsigned transform_addr;
-public:
-    ImageRenderer();
-    void draw_game_over(float x, float y);
-    void draw_heart(float x, float y);
-    void draw_win(float x, float y);
-};
-ImageRenderer::ImageRenderer() 
-    : game_over_tex{}, heart_tex{}, win_tex{}, VAO{}, image_prog{"./shaders/text.vert", "./shaders/text.frag"}, transform_addr{} 
+ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_path) 
+    : game_over_tex{}, heart_tex{}, win_tex{}, VAO{}, image_prog{vert_path, frag_path}, transform_addr{} 
 {
     unsigned textures[3];
 
@@ -38,6 +21,10 @@ ImageRenderer::ImageRenderer()
     glGenTextures(3, &textures);
 
     unsigned char* data = stbi_load(game_over_path.c_str(), &width, &height, &nrChannels);
+    if(!data){
+        std::cout << "failed to load game_over";
+        return;
+    }
     glBindTexture(GL_TEXTURE_2D, textures[0]);
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
@@ -47,6 +34,10 @@ ImageRenderer::ImageRenderer()
     stbi_image_free(data);
 
     data = stbi_load(heart_path.c_str(), &width, &height, &nrChannels)
+    if(!data){
+        std::cout << "failed to load heart";
+        return;
+    }
     glBindTexture(GL_TEXTURE_2D, textures[1]);
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); 
@@ -56,6 +47,10 @@ ImageRenderer::ImageRenderer()
     stbi_image_free(data);
 
     data = stbi_load(win_path.c_str(), &width, &height, &nrChannels)
+    if(!data){
+        std::cout << "failed to load win";
+        return;
+    }
     glBindTexture(GL_TEXTURE_2D, textures[2]);
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
@@ -104,3 +99,35 @@ ImageRenderer::ImageRenderer()
     this->transform_addr = image_prog.get_uniform_addr("transform");
 }
 
+void ImageRenderer::draw_game_over(float x, float y){
+    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f}};
+    trans = glm::scale(trans, glm::vec3{1.5f, 1.0f, 1.0f});
+    image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
+
+    glBindVertexArray(VAO);
+    glBindTexture(GL_TEXTURE_2D, game_over_tex);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+void ImageRenderer::draw_heart(float x, float y){
+    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f}};
+    trans = glm::scale(trans, glm::vec3{1.0f, 1.0f, 1.0f});
+    image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
+
+    glBindVertexArray(VAO);
+    glBindTexture(GL_TEXTURE_2D, heart_tex);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void ImageRenderer::draw_win(float x, float y){
+    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f}};
+    trans = glm::scale(trans, glm::vec3{1.5f, 1.0f, 1.0f});
+    image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
+
+    glBindVertexArray(VAO);
+    glBindTexture(GL_TEXTURE_2D, win_tex);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void ImageRenderer::use_shader(){
+    image_prog.use();
+}

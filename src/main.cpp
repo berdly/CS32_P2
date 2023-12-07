@@ -15,13 +15,12 @@
 //class which handles rendering of entities
 #include "../src/lib/renderer.h"
 #include "../src/lib/handler.h"
+#include "../src/lib/imagerenderer.h"
+
 //OpenGL function loading
 #include <glad/glad.h>
 //window and input handling
 #include <GLFW/glfw3.h>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 
 #include <random>
 // Standard Headers
@@ -83,10 +82,10 @@ int main(int argc, char * argv[]) {
     glFrontFace(GL_CW);
     
     ShaderProg shaderProg{ "./shaders/vertex.vert", "./shaders/fragment.frag" };
-    shaderProg.use();
     DBG("test");
     DBG(mwindow);
     
+    ImageRenderer images{"./shaders/text.vert", "./shaders/text.frag"};
     PlayerHandler player{shaderProg};
     PlayerBulletHandler bullets{shaderProg};
 
@@ -151,15 +150,16 @@ int main(int argc, char * argv[]) {
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
-        
-            player.draw();
-            bullets.draw();
+        shaderProg.use();
+        player.draw();
+        bullets.draw();
         
        
         //chaser.draw();
         enemy.draw();
         enemyBullets.draw();
-
+        images.use_shader();
+        images.draw_game_over(0.0f, 0.0f);
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
