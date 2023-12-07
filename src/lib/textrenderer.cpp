@@ -1,6 +1,6 @@
 #include "textrenderer.h"
 
-TextRenderer::TextRenderer(ShaderProg& shader, const fs::path& font_path) : text_shader{shader}{
+TextRenderer::TextRenderer(ShaderProg& shader, const fs::path& font_path) : chars{}, VAO{}, transform_addr{}, text_shader{shader}{
     FT_Library ft;
     if (FT_Init_FreeType(&ft))
     {

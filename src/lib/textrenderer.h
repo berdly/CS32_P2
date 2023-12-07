@@ -23,7 +23,7 @@ class TextRenderer {
     unsigned transform_addr;
     ShaderProg& text_shader;
 public:
-    TextRenderer(ShaderProg& shader);
+    TextRenderer(ShaderProg& shader, const fs::path& font_path);
     void draw_char(char c, float x, float y) const;
     void draw_str(const std::string& str, float x, float y) const;
 };
