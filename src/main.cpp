@@ -34,7 +34,7 @@ int gen_range(RNG& gen){
 
 glm::vec2 gen_coord(RNG& gen){
     static std::uniform_real_distribution<float> distx{-1.0f, 1.0f};
-     static std::uniform_real_distribution<float> disty{0, 1.0f};
+    static std::uniform_real_distribution<float> disty{0, 1.0f};
     return glm::vec2{distx(gen), disty(gen)};
 }
 
@@ -42,9 +42,6 @@ void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(height/3, 0, height, height);
 }
 
-void draw_char(char c){
-
-}
 /*
 GLFWwindow* init_window() {
     glfwInit();
@@ -95,8 +92,12 @@ int main(int argc, char * argv[]) {
     }
     glfwMakeContextCurrent(mwindow);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    glViewport(0, 0, 600, 800);
+    //glViewport(0, 0, 600, 800);
     glfwSetFramebufferSizeCallback(mwindow, frame_buffer_size_callback);
+    int width, height;
+    glfwGetWindowSize(mwindow, &width, &height);
+    glfwSetWindowSize(mwindow, height, height);
+
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     
     glEnable(GL_CULL_FACE); // cull facem
@@ -183,7 +184,6 @@ int main(int argc, char * argv[]) {
 
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
-        std::cerr << '/r' << 1.0f/dt;
     }
     glfwTerminate();
 }
