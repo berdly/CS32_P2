@@ -162,7 +162,7 @@ int main(int argc, char * argv[]) {
 
 
         images.use_shader();
-        images.draw_win(0.0f, 0.0f);
+        //images.draw_win(0.0f, 0.0f);
         switch(player.get_health()){
             case 3:
                 images.draw_heart(-0.79f, 0.9f);
