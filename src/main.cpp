@@ -158,6 +158,7 @@ int main(int argc, char * argv[]) {
         //chaser.draw();
         enemy.draw();
         enemyBullets.draw();
+        
         images.use_shader();
         images.draw_game_over(0.0f, 0.0f);
         glfwSwapBuffers(mwindow);

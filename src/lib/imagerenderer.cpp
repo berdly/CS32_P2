@@ -33,7 +33,7 @@ ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_pat
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(data);
 
-    data = stbi_load(heart_path.c_str(), &width, &height, &nrChannels)
+    data = stbi_load(heart_path.c_str(), &width, &height, &nrChannels);
     if(!data){
         std::cout << "failed to load heart";
         return;
@@ -46,7 +46,7 @@ ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_pat
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(data);
 
-    data = stbi_load(win_path.c_str(), &width, &height, &nrChannels)
+    data = stbi_load(win_path.c_str(), &width, &height, &nrChannels);
     if(!data){
         std::cout << "failed to load win";
         return;
@@ -100,7 +100,7 @@ ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_pat
 }
 
 void ImageRenderer::draw_game_over(float x, float y){
-    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f}};
+    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f})};
     trans = glm::scale(trans, glm::vec3{1.5f, 1.0f, 1.0f});
     image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
 
@@ -109,7 +109,7 @@ void ImageRenderer::draw_game_over(float x, float y){
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 void ImageRenderer::draw_heart(float x, float y){
-    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f}};
+    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f})};
     trans = glm::scale(trans, glm::vec3{1.0f, 1.0f, 1.0f});
     image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
 
@@ -119,7 +119,7 @@ void ImageRenderer::draw_heart(float x, float y){
 }
 
 void ImageRenderer::draw_win(float x, float y){
-    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f}};
+    glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f})};
     trans = glm::scale(trans, glm::vec3{1.5f, 1.0f, 1.0f});
     image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
 
