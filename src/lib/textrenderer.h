@@ -3,7 +3,7 @@
 #define TEXTRENDERER_H
 #include "shaderprog.h"
 
-
+#include <glm/glm.hpp>
 #include <ft2build.h>
 #include <freetype/freetype.h>
 

@@ -1,5 +1,5 @@
 #include "textrenderer.h"
-#include <glm/glm.hpp>
+
 TextRenderer::TextRenderer(ShaderProg& shader, const fs::path& font_path) : text_shader{shader}{
     FT_Library ft;
     if (FT_Init_FreeType(&ft))
