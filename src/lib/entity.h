@@ -123,11 +123,13 @@ class Enemy : public Entity {
 
 public: 
     
-    Enemy(const glm::vec2& pos, float br, float * loc) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}, bulletRate{br}, pl{loc}{}
+    Enemy(const glm::vec2& pos, float br, float * loc) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}, bulletRate{br}, pl{loc},angleAccum{0}{}
 
     bool update(float dt)  override {
         
         timeAccum+=dt;
+        angleAccum+=dt;
+
         
         
         position.x -= xChange;
@@ -139,10 +141,14 @@ public:
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
 
+        if(angleAccum > .1){
         if(pl[1] <= position.y){ // works
-            angle =  glm::tan((pl[0] - position.x)/(position.y - pl[1])); //180 straight down
-        }else {
-            angle =  glm::tan((pl[1]- position.y)/(pl[0]-position.x)); 
+            angle = -1*glm::atan((pl[0] - position.x)/(pl[1]-position.y)) ; //180 straight down
+            
+        }else  {
+            angle = glm::atan((pl[0]- position.x)/(position.y-pl[1])) + glm::radians(180.0f); 
+        } 
+          angleAccum = 0;
         }
         if(timeAccum > bulletRate){
             timeAccum = 0;
@@ -157,21 +163,22 @@ private:
     float timeAccum;
     float bulletRate;
     float * pl;
+    float angleAccum;
 
 };
 
 class ChaserEnemy : public Entity {
 
 public:
-    ChaserEnemy(const glm::vec2& pos,float * loc) : Entity{ pos, glm::vec2{0.025f, 0.1f },0.0075f}, pl{loc} {}
+    ChaserEnemy(const glm::vec2& pos,float * loc) : Entity{ pos, glm::vec2{0.025f, 0.1f },0.0075f}, pl{loc}, timeAccum{0.0f}{}
     
     bool update(float dt) override{//needs to somehow get player location
+        timeAccum+=dt;
 
-        if(pl[1] <= position.y){ // works
-            angle =  glm::tan((pl[0] - position.x)/(position.y - pl[1])); //180 straight down
-        }else {
-            angle =  glm::tan((pl[1]- position.y)/(pl[0]-position.x)); 
+        if(timeAccum < .1){
+            return false;
         }
+        timeAccum = 0.0f;
 
          position += speed * glm::vec2{2.0f*glm::sin(angle)/3.0f, -glm::cos(angle)};
         //std::cout<<position.x <<" "<<angle<<" "<<position.y<<std::endl;
@@ -181,12 +188,16 @@ public:
         position.x = std::clamp(position.x, -1.0f, 1.0f);
         position.y = std::clamp(position.y, -1.0f, 1.0f);
 
+
+        
+       
         return false;
         
         
 
     }
     float * pl;
+    float timeAccum;
 
    
 
