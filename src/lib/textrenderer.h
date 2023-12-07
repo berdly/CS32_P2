@@ -1,4 +1,4 @@
-
+/*
 #ifndef TEXTRENDERER_H
 #define TEXTRENDERER_H
 #include "shaderprog.h"
@@ -28,6 +28,4 @@ public:
     void draw_str(const std::string& str, float x, float y) const;
 };
 #endif
-
-
-
+*/

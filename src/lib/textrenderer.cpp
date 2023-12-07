@@ -1,3 +1,5 @@
+
+/*
 #include "textrenderer.h"
 
 TextRenderer::TextRenderer(ShaderProg& shader, const fs::path& font_path) : chars{}, VAO{}, transform_addr{}, text_shader{shader}{
@@ -57,3 +59,4 @@ TextRenderer::TextRenderer(ShaderProg& shader, const fs::path& font_path) : char
 }
 void TextRenderer::draw_char(char c, float x, float y) const {}
 void TextRenderer::draw_str(const std::string& str, float x, float y) const {}
+*/
