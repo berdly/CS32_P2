@@ -8,7 +8,7 @@ TextRenderer::TextRenderer(ShaderProg& shader, const fs::path& font_path) : char
     }
 
     FT_Face face;
-    if (FT_New_Face(ft, font_path, 0, &face))
+    if (FT_New_Face(ft, font_path.c_str(), 0, &face))
     {
         std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;  
     }
@@ -44,13 +44,13 @@ TextRenderer::TextRenderer(ShaderProg& shader, const fs::path& font_path) : char
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         // now store character for later use
-        CharInfo character = {
+        TextRenderer::CharInfo character = {
             texture, 
             glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
             glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
             face->glyph->advance.x
         };
-        chars.insert(std::pair<char, CharInfo>(c, character));
+        chars.insert(std::pair<char, TextRenderer::CharInfo>(c, character));
     }
     FT_Done_Face(face);
     FT_Done_FreeType(ft);
