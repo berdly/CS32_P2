@@ -22,6 +22,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+
 #include <random>
 // Standard Headers
 typedef std::mt19937 RNG;
@@ -42,35 +43,12 @@ void frame_buffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(height/3, 0, height, height);
 }
 
-/*
-GLFWwindow* init_window() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    GLFWwindow* mwindow{ glfwCreateWindow(800, 600, "CS32 Project 2", nullptr, nullptr) };
-    if (!mwindow) {
-        std::cout << "Couldn't open window.";
-    }
-    glfwMakeContextCurrent(mwindow);
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    glViewport(0, 0, 600, 800);
-    glfwSetFramebufferSizeCallback(mwindow, frame_buffer_size_callback);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    
-    glEnable(GL_CULL_FACE); // cull facem
-    glCullFace(GL_BACK); // cull back face
-    glFrontFace(GL_CW);
-    
-    return mwindow;
-}
-*/
+
 void processInput(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
 }
-
 
 
 int main(int argc, char * argv[]) {
