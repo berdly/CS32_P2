@@ -18,9 +18,9 @@ ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_pat
 
     stbi_set_flip_vertically_on_load(true);
 
-    glGenTextures(3, &textures);
+    glGenTextures(3, (GLuint*)textures);
 
-    unsigned char* data = stbi_load(game_over_path.c_str(), &width, &height, &nrChannels);
+    unsigned char* data = stbi_load(game_over_path.c_str(), &width, &height, &nrChannels, 0);
     if(!data){
         std::cout << "failed to load game_over";
         return;
@@ -33,7 +33,7 @@ ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_pat
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(data);
 
-    data = stbi_load(heart_path.c_str(), &width, &height, &nrChannels);
+    data = stbi_load(heart_path.c_str(), &width, &height, &nrChannels, 0);
     if(!data){
         std::cout << "failed to load heart";
         return;
@@ -46,7 +46,7 @@ ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_pat
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(data);
 
-    data = stbi_load(win_path.c_str(), &width, &height, &nrChannels);
+    data = stbi_load(win_path.c_str(), &width, &height, &nrChannels, 0);
     if(!data){
         std::cout << "failed to load win";
         return;
