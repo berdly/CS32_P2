@@ -162,7 +162,7 @@ int main(int argc, char * argv[]) {
 
 
         images.use_shader();
-        images.draw_game_over(0.0f, 0.0f);
+        images.draw_win(0.0f, 0.0f);
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
