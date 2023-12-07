@@ -163,6 +163,7 @@ int main(int argc, char * argv[]) {
 
         images.use_shader();
         images.draw_win(0.0f, 0.0f);
+        images.draw_heart(1.0f, 1.0f);
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }

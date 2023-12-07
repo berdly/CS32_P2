@@ -110,7 +110,7 @@ void ImageRenderer::draw_game_over(float x, float y){
 }
 void ImageRenderer::draw_heart(float x, float y){
     glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x, y, 0.0f})};
-    trans = glm::scale(trans, glm::vec3{1.0f, 1.0f, 1.0f});
+    trans = glm::scale(trans, glm::vec3{0.1f, 0.1f, 1.0f});
     image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
 
     glBindVertexArray(VAO);
