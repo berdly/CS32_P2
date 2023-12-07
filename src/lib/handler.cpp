@@ -46,6 +46,9 @@ bool PlayerHandler::checkCollisions(const ExpendableObjectHandler& handler) {
 glm::vec3 PlayerHandler::get_coord(){
     return glm::vec3(player.get_pos(), player.rotation());
 }
+unsigned PlayerHandler::get_health(){
+    return health;
+}
 /*
 class ExpendableObjectHandler {
     std::vector<ExpendableObject> entities;
