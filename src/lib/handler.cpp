@@ -1,7 +1,7 @@
 #include "handler.h"
 #include <algorithm>
 
-PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, -0.5f} }, health{ 10}, active{true},renderer{ vertices, sizeof(vertices),objColor, prog } {}
+PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, -0.5f} }, health{ 5}, active{true},renderer{ vertices, sizeof(vertices),objColor, prog } {}
 bool PlayerHandler::update(GLFWwindow* window, float dt) {
     this->player.process_input(window);
     return this->player.update(dt);
@@ -13,15 +13,14 @@ void PlayerHandler::draw() const{
 }
 
 bool PlayerHandler::checkCollisions(const ExpendableObjectHandler& handler) {
-    if(health == 0){
-        this->active = false;
-        return true;
-    }
+    
     for(const auto& obj : handler.get_objects()){
         if(obj.pos->in(this->player.get_pos())){
             this->health--;
-            
-            return health == 0;
+            if(health == 0){
+                this->active = false;
+            }
+            return true;
         }
     }
     return false;

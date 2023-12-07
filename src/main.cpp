@@ -101,6 +101,7 @@ int main(int argc, char * argv[]) {
     int i = 0;
     float playerLoc[2] = {player.get_coord().x,player.get_coord().y}; 
     float rate_lock{}; 
+    unsigned iframes{10};
     while (!glfwWindowShouldClose(mwindow)) {
         playerLoc[0] = player.get_coord().x;
         playerLoc[1] = player.get_coord().y;
@@ -142,11 +143,18 @@ int main(int argc, char * argv[]) {
 
 
         enemy.checkCollisions(bullets);
-        player.checkCollisions(enemyBullets);
+        if(iframes == 0){
+            if(player.checkCollisions(enemyBullets)){
+                iframes = 10;
+            };
+        }
 
         if(rate_lock < 1.0f/24.0f){
             rate_lock += dt;
             continue;
+        }
+        if(iframes > 0){
+            iframes--;
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
@@ -164,16 +172,6 @@ int main(int argc, char * argv[]) {
         images.use_shader();
         //images.draw_win(0.0f, 0.0f);
         switch(player.get_health()){
-            case 10:
-                images.draw_heart(-0.23f, 0.9f);
-            case 9:
-                images.draw_heart(-0.31f, 0.9f);
-            case 8:
-                images.draw_heart(-0.39f, 0.9f);
-            case 7:
-                images.draw_heart(-0.47f, 0.9f);
-            case 6:
-                images.draw_heart(-0.55f, 0.9f);
             case 5:
                 images.draw_heart(-0.63f, 0.9f);
             case 4:
