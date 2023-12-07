@@ -163,9 +163,22 @@ int main(int argc, char * argv[]) {
 
         images.use_shader();
         images.draw_win(0.0f, 0.0f);
-        images.draw_heart(-0.95f, 0.9f);
-        images.draw_heart(-0.87f, 0.9f);
-        images.draw_heart(-0.79f, 0.9f);
+        switch(player.get_health()){
+            case 3:
+                images.draw_heart(-0.79f, 0.9f);
+            case 2:
+                images.draw_heart(-0.87f, 0.9f);
+            case 1:
+                images.draw_heart(-0.95f, 0.9f);
+                break;
+            case 0:
+                enemy.deactivate();
+                images.draw_game_over(0.0f, 0.0f);
+                break;
+            default:
+                break;
+        }
+        
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }

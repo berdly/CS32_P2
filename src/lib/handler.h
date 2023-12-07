@@ -64,6 +64,7 @@ public:
     void draw() const;
     void prune();
     bool checkCollisions(const ExpendableObjectHandler&);
+    unsigned get_health();
     bool get_active(){return active;}
     glm::vec3 get_coord();
 };
@@ -106,6 +107,9 @@ class EnemyHandler : public ExpendableObjectHandler {
             level = l;
         }
         int getLev(){return level;}
+        void deactivate(){
+            entities.clear();
+        }
     private:
 
         int level;

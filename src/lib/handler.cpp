@@ -25,7 +25,7 @@ bool PlayerHandler::update(GLFWwindow* window, float dt) {
 }
 void PlayerHandler::draw() const{
     if(this->active){
-    this->renderer.draw(player);
+        this->renderer.draw(player);
     }
 }
 
