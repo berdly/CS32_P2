@@ -194,6 +194,7 @@ int main(int argc, char * argv[]) {
                 images.draw_heart(-0.95f, 0.9f);
                 break;
             case 0:
+                lost = true;
                 enemy.deactivate();
                 images.draw_game_over(0.0f, 0.0f);
                 break;
