@@ -5,7 +5,7 @@
 
 
 #include <ft2build.h>
-#include FT_FREE_TYPE_H
+#include <freetype/freetype.h>
 
 #include <map>
 
