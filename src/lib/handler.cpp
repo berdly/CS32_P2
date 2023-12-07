@@ -1,23 +1,6 @@
 #include "handler.h"
 #include <algorithm>
-/*
-class PlayerHandler {
-    static constexpr float* vertices{
-            -0.025f, -0.05f, 0.05f,
-            0.0f, 0.05f, 0.0f,
-            0.025f, -0.05f, 0.0f
-        }
-    };
-    Player player;
-    unsigned health;
-    Renderer renderer;
-    public:
-    PlayerHandler(ShaderProg& prog);
-    bool update(GLFWwindow* window, float dt);
-    void draw();
-    void checkCollisions(const ExpendableObjectHandler&);
-};
-*/
+
 PlayerHandler::PlayerHandler(ShaderProg& prog) : player{ glm::vec2{0.0f, -0.5f} }, health{ 10}, active{true},renderer{ vertices, sizeof(vertices),objColor, prog } {}
 bool PlayerHandler::update(GLFWwindow* window, float dt) {
     this->player.process_input(window);
