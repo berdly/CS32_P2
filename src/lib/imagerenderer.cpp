@@ -4,7 +4,11 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+
+#include <map>
+#include <cmath>
 #include "imagerenderer.h"
+
 
 ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_path) 
     : game_over_tex{}, heart_tex{}, win_tex{}, VAO{}, image_prog{vert_path, frag_path}, transform_addr{} 
@@ -96,7 +100,33 @@ ImageRenderer::ImageRenderer(const fs::path& vert_path, const fs::path& frag_pat
     this->game_over_tex = textures[0];
     this->heart_tex = textures[1];
     this->win_tex = textures[2];
+    this->nums = this->gen_nums();
     this->transform_addr = image_prog.get_uniform_addr("transform");
+}
+std::map<unsigned, unsigned> ImageRenderer::gen_nums(){
+    unsigned textures[10];
+    int width, height, nrChannels;
+    glGenTextures(10, (GLuint*)textures);
+    fs::path resources{"./resources"};
+    std::map<unsigned, unsigned> nums;
+    for(char c{'0'}; c <= '9'; c++){
+        std::string num{c};
+        num.append(".png");
+        unsigned char* data = stbi_load((resources / num).c_str(), &width, &height, &nrChannels, 0);
+        if(!data){
+            std::cout << "failed to load game_over";
+            return;
+        }
+        glBindTexture(GL_TEXTURE_2D, textures[c - '0']);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        stbi_image_free(data);
+        nums.insert(std::pair<unsigned,unsigned>(static_cast<unsigned>(c - '0'), textures[c - '0']));
+    }
+    return nums;
 }
 
 void ImageRenderer::draw_game_over(float x, float y){
@@ -126,6 +156,22 @@ void ImageRenderer::draw_win(float x, float y){
     glBindVertexArray(VAO);
     glBindTexture(GL_TEXTURE_2D, win_tex);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+void ImageRenderer::draw_num(float x, float y, unsigned places, unsigned num){
+    float x_pos{x};
+    float y_pos{y};
+    unsigned place{10};
+    for(unsigned i{places}; i <= 0; i--){
+        glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x_pos, y_pos, 0.0f})};
+        trans = glm::scale(trans, glm::vec3{(1.0f)/10.0f, (1.5f)/10.0f, 1.0f});
+        image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
+
+        glBindVertexArray(VAO);
+        glBindTexture(GL_TEXTURE_2D, nums[i % place]);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        place *= 10;
+        x_pos -= 0.08;
+    }
 }
 
 void ImageRenderer::use_shader(){
