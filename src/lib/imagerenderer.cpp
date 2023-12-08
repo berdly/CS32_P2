@@ -160,7 +160,7 @@ void ImageRenderer::draw_num(float x, float y, unsigned places, unsigned num){
     float x_pos{x};
     float y_pos{y};
     unsigned place{10};
-    for(unsigned i{places}; i >= 0; i--){
+    for(unsigned i{places}; i > 0; i--){
         glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x_pos, y_pos, 0.0f})};
         trans = glm::scale(trans, glm::vec3{(1.0f), (1.5f), 1.0f});
         image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
