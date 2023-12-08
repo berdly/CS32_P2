@@ -103,7 +103,7 @@ public:
 
 class PlayerBullet : public Entity {
 public:
-    PlayerBullet(const glm::vec2& pos, float rot) : Entity{ pos, glm::vec2{0.05f, 0.05f}, 1.5f, rot } {}//std::cout << "Bullet spawned at (" << this->x_pos() << ", " << this->y_pos() << ")\n"; }
+    PlayerBullet(const glm::vec2& pos, float rot) : Entity{ pos, glm::vec2{0.08f, 0.08f}, 1.5f, rot } {}//std::cout << "Bullet spawned at (" << this->x_pos() << ", " << this->y_pos() << ")\n"; }
     bool update(float dt) override {
         position -= dt * speed * glm::vec2{ 4.0f * glm::sin(angle)/3.0f, -glm::cos(angle) };
         return false;
@@ -123,7 +123,7 @@ class Enemy : public Entity {
 
 public: 
     
-    Enemy(const glm::vec2& pos, float br, float * loc) : Entity{ pos, glm::vec2{0.05f, 0.1f }} , xChange{.001}, bulletRate{br}, pl{loc},angleAccum{0}{}
+    Enemy(const glm::vec2& pos, float br, float * loc) : Entity{ pos, glm::vec2{0.09f, 0.15f }} , xChange{.001}, bulletRate{br}, pl{loc},angleAccum{0}{}
 
     bool update(float dt)  override {
         
