@@ -104,8 +104,8 @@ int main(int argc, char * argv[]) {
     unsigned iframes{10};
     bool won{false};
     bool lost{false};
-    int counter;
-    float count;
+    int counter{};
+    float count{};
     while (!glfwWindowShouldClose(mwindow)) {
         playerLoc[0] = player.get_coord().x;
         playerLoc[1] = player.get_coord().y;
