@@ -104,6 +104,8 @@ int main(int argc, char * argv[]) {
     unsigned iframes{10};
     bool won{false};
     bool lost{false};
+    int num;
+    float count;
     while (!glfwWindowShouldClose(mwindow)) {
         playerLoc[0] = player.get_coord().x;
         playerLoc[1] = player.get_coord().y;
@@ -158,7 +160,11 @@ int main(int argc, char * argv[]) {
                 iframes = 10;
             };
         }
-
+        count += dt;
+        if(count > 1.0f){
+            num++;
+            count = 0.0f;
+        }
         if(rate_lock < 1.0f/24.0f){
             rate_lock += dt;
             continue;
@@ -204,7 +210,8 @@ int main(int argc, char * argv[]) {
         if(won){
             images.draw_win(0.0f, 0.0f);
         }
-        images.draw_num(0.0f, 0.0f, 1, 20);
+
+        images.draw_num(0.0f, 0.0f, 1, num);
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
