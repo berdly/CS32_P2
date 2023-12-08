@@ -162,7 +162,7 @@ int main(int argc, char * argv[]) {
         }
         count += dt;
         if(count > 1.0f){
-            num++;
+            counter++;
             count = 0.0f;
         }
         if(rate_lock < 1.0f/24.0f){
