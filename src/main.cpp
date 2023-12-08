@@ -165,7 +165,7 @@ int main(int argc, char * argv[]) {
             };
         }
         
-        if(rate_lock < 1.0f/24.0f){
+        if(rate_lock < 1.0f/40.0f){
             rate_lock += dt;
             continue;
         }
@@ -210,8 +210,9 @@ int main(int argc, char * argv[]) {
         if(won){
             images.draw_win(0.0f, 0.0f);
         }
-        
-        images.draw_num(0.95f, 0.9f, 3, kill_count);
+        if(!won){
+            images.draw_num(0.95f, 0.9f, 3, kill_count);
+        }  
         
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
