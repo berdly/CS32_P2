@@ -104,7 +104,7 @@ int main(int argc, char * argv[]) {
     unsigned iframes{10};
     bool won{false};
     bool lost{false};
-    int num;
+    int counter;
     float count;
     while (!glfwWindowShouldClose(mwindow)) {
         playerLoc[0] = player.get_coord().x;
@@ -211,7 +211,7 @@ int main(int argc, char * argv[]) {
             images.draw_win(0.0f, 0.0f);
         }
 
-        images.draw_num(0.0f, 0.0f, 1, num);
+        images.draw_num(0.0f, 0.0f, 1, counter);
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
