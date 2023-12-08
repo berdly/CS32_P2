@@ -161,7 +161,7 @@ int main(int argc, char * argv[]) {
             };
         }
         
-        if(rate_lock < 1.0f/24.0f){
+        if(rate_lock < 1.0f/40.0f){
             rate_lock += dt;
             continue;
         }
