@@ -159,14 +159,14 @@ void ImageRenderer::draw_win(float x, float y){
 void ImageRenderer::draw_num(float x, float y, unsigned places, unsigned num){
     float x_pos{x};
     float y_pos{y};
-    unsigned place{10};
+    unsigned place{1};
     for(unsigned i{places}; i > 0; i--){
         glm::mat4 trans{glm::translate(glm::mat4{1.0f}, glm::vec3{x_pos, y_pos, 0.0f})};
         trans = glm::scale(trans, glm::vec3{(1.0f)/15.0f, (1.5f)/15.0f, 1.0f});
         image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
 
         glBindVertexArray(VAO);
-        glBindTexture(GL_TEXTURE_2D, nums[num % place]);
+        glBindTexture(GL_TEXTURE_2D, nums[(num*place) % 10]);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         place *= 10;
         x_pos -= 0.08;
