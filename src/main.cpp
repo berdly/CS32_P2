@@ -204,7 +204,7 @@ int main(int argc, char * argv[]) {
         if(won){
             images.draw_win(0.0f, 0.0f);
         }
-        images.draw_num(0.0f, 0.0f, 2, 20);
+        images.draw_num(0.0f, 0.0f, 1, 20);
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
