@@ -119,9 +119,13 @@ int main(int argc, char * argv[]) {
                 glClearColor(0.1f, 0.2f, .4f, 1.0f);
             } else if(enemy.getLev() == 2){
                 glClearColor(0.1f, .3f, 0.1f, 1.0f);
+            }else if(enemy.getLev() ==3 ){
+                glClearColor(0.3f, .1f, 0.1f, 1.0f);
+            }else if(enemy.getLev() == 4){
+                glClearColor(.1f, .3f, .3f, 1.0f);
             }
             enemy.setLev(enemy.getLev()+1);
-            if(enemy.getLev() < 4){
+            if(enemy.getLev() < 6){
                 for(size_t i = 0; i < enemy.getnumEn()[enemy.getLev()];i++){
                     enemy.spawn(glm::vec3( gen_coord(rng) ,0.0f), playerLoc);
                 }

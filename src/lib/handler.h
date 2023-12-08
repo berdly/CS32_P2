@@ -92,8 +92,8 @@ class EnemyHandler : public ExpendableObjectHandler {
 
     static constexpr glm::vec3 objColor{1.0f, 0.0f, 0.0f};
     
-    const std::map<int,float> lev{{1,3.0f}, {2, 2.0f}, {3, 1.00f}}; //each level and corresponding bullet rate;
-    const std::map<int,int> enMap{{1,2}, {2, 3}, {3, 5}};
+    const std::map<int,float> lev{{1,3.0f}, {2, 2.0f}, {3, 1.00f}, {4,1.0f}, {5,1.0f}}; //each level and corresponding bullet rate;
+    const std::map<int,int> enMap{{1,2}, {2, 4}, {3, 6}, {4,8}, {5,10}};
     public:
         EnemyHandler(ShaderProg & prog);
         void spawn(const glm::vec3& coord, float * pl);
