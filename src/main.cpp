@@ -114,9 +114,9 @@ int main(int argc, char * argv[]) {
         
         if(enemy.getActive() == 0){
             if(enemy.getLev() == 1){
-                glClearColor(0.0f, 0.5f, .7f, 1.0f);
+                glClearColor(0.1f, 0.2f, .4f, 1.0f);
             } else if(enemy.getLev() == 2){
-                glClearColor(0.2f, .153f, 0.153f, 1.0f);
+                glClearColor(0.1f, .3f, 0.1f, 1.0f);
             }
             enemy.setLev(enemy.getLev()+1);
             if(enemy.getLev() < 4){

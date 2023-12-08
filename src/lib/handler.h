@@ -21,7 +21,7 @@ struct ExpendableObject {
     //glm::vec2 pl; //player location
 
     std::unique_ptr<Entity> pos;
-    ExpendableObject(bool state, Entity* type) : active{ state }, pos{ type }, health{3.0f} {};
+    ExpendableObject(bool state, Entity* type) : active{ state }, pos{ type }, health{1.0f} {};
    
 };
 //handles groups of expendable objects
@@ -92,8 +92,8 @@ class EnemyHandler : public ExpendableObjectHandler {
 
     static constexpr glm::vec3 objColor{1.0f, 0.0f, 0.0f};
     
-    const std::map<int,float> lev{{1,1.0f}, {2, 0.5f}, {3, 0.25f}}; //each level and corresponding bullet rate;
-    const std::map<int,int> enMap{{1,5}, {2, 7}, {3, 11}};
+    const std::map<int,float> lev{{1,3.0f}, {2, 2.0f}, {3, 1.00f}}; //each level and corresponding bullet rate;
+    const std::map<int,int> enMap{{1,2}, {2, 3}, {3, 5}};
     public:
         EnemyHandler(ShaderProg & prog);
         void spawn(const glm::vec3& coord, float * pl);
