@@ -111,8 +111,8 @@ void ChaserEnemyHandler::spawn(const glm::vec3& coord, float * pl) {
 
 
 
-bool EnemyHandler::checkCollisions(const ExpendableObjectHandler& handler) {
-
+unsigned EnemyHandler::checkCollisions(const ExpendableObjectHandler& handler) {
+    unsigned killed{};
     for( ExpendableObject& enem: this->entities){
 
     for(const ExpendableObject& obj : handler.get_objects()){
@@ -120,12 +120,13 @@ bool EnemyHandler::checkCollisions(const ExpendableObjectHandler& handler) {
             enem.health--;
             if(enem.health == 0){
                 enem.active = false;
+                killed++;
             }
         }
     }
 
     }
-    return false;
+    return killed;
 }
 
 EnemyBulletHandler::EnemyBulletHandler(ShaderProg& prog) : ExpendableObjectHandler{vertices, sizeof(vertices), objColor, prog}, timeAccum{0.0f}, bulletRate{1.0f}{}

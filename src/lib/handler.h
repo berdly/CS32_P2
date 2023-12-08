@@ -97,7 +97,7 @@ class EnemyHandler : public ExpendableObjectHandler {
     public:
         EnemyHandler(ShaderProg & prog);
         void spawn(const glm::vec3& coord, float * pl);
-        bool checkCollisions(const ExpendableObjectHandler& handler);
+        unsigned checkCollisions(const ExpendableObjectHandler& handler);
         std::map<int,float> getLevels(){
             return levels;
         }

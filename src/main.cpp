@@ -154,7 +154,7 @@ int main(int argc, char * argv[]) {
         //chaser.update(dt);
 
 
-        enemy.checkCollisions(bullets);
+        kill_count += enemy.checkCollisions(bullets);
         if(iframes == 0){
             if(player.checkCollisions(enemyBullets)){
                 iframes = 10;
@@ -206,9 +206,9 @@ int main(int argc, char * argv[]) {
         if(won){
             images.draw_win(0.0f, 0.0f);
         }
-        if(!lost){
-            images.draw_num(0.95f, 0.9f, 3, kill_count);
-        }
+        
+        images.draw_num(0.95f, 0.9f, 3, kill_count);
+        
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
     }
