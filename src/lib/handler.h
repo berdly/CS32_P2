@@ -71,10 +71,10 @@ public:
 
 class PlayerBulletHandler : public ExpendableObjectHandler {
     static constexpr float vertices[] = {
-        -0.0125f, -0.0125f, 0.0f,
-        -0.0125f, 0.0125f, 0.0f,
-        0.0125f, 0.0125f, 0.0f,
-        0.0125f, -0.0125f, 0.0f,
+        -0.002f, -0.03f, 0.0f,
+        -0.002f, 0.03f, 0.0f,
+        0.002f, 0.03f, 0.0f,
+        0.002f, -0.03f, 0.0f,
     };
     static constexpr glm::vec3 objColor{0.8f, 0.8f, 0.1f};
 public:
@@ -135,11 +135,11 @@ class ChaserEnemyHandler : public ExpendableObjectHandler {
 
 
 class EnemyBulletHandler : public ExpendableObjectHandler {
-    static constexpr float vertices[] = {
-        -0.0125f, -0.0125f, 0.0f,
-        -0.0125f, 0.0125f, 0.0f,
-        0.0125f, 0.0125f, 0.0f,
-        0.0125f, -0.0125f, 0.0f,
+     static constexpr float vertices[] = {
+        -0.002f, -0.03f, 0.0f,
+        -0.002f, 0.03f, 0.0f,
+        0.002f, 0.03f, 0.0f,
+        0.002f, -0.03f, 0.0f,
     };
     static constexpr glm::vec3 objColor{1.0f, 0.0f,0.0f};
 public:
