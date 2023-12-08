@@ -166,7 +166,7 @@ void ImageRenderer::draw_num(float x, float y, unsigned places, unsigned num){
         image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
 
         glBindVertexArray(VAO);
-        glBindTexture(GL_TEXTURE_2D, nums[(num*place) % 10]);
+        glBindTexture(GL_TEXTURE_2D, nums[(num/place) % 10]);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         place *= 10;
         x_pos -= 0.08;

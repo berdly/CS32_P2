@@ -206,8 +206,9 @@ int main(int argc, char * argv[]) {
         if(won){
             images.draw_win(0.0f, 0.0f);
         }
-        
-        images.draw_num(0.95f, 0.9f, 3, kill_count);
+        if(!won){
+            images.draw_num(0.95f, 0.9f, 3, kill_count);
+        }  
         
         glfwSwapBuffers(mwindow);
         glfwPollEvents();
