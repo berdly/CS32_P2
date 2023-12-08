@@ -114,8 +114,7 @@ std::map<unsigned, unsigned> ImageRenderer::gen_nums(){
         num.append(".png");
         unsigned char* data = stbi_load((resources / num).c_str(), &width, &height, &nrChannels, 0);
         if(!data){
-            std::cout << "failed to load game_over";
-            return;
+            std::cout << "failed to load " << c << '\n';
         }
         glBindTexture(GL_TEXTURE_2D, textures[c - '0']);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
@@ -167,7 +166,7 @@ void ImageRenderer::draw_num(float x, float y, unsigned places, unsigned num){
         image_prog.setMatrix(transform_addr, glm::value_ptr(trans));
 
         glBindVertexArray(VAO);
-        glBindTexture(GL_TEXTURE_2D, nums[i % place]);
+        glBindTexture(GL_TEXTURE_2D, nums[num % place]);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         place *= 10;
         x_pos -= 0.08;
